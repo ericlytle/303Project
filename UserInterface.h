@@ -114,7 +114,7 @@ AssignmentStatuses UserInterface::GetStatusFromUser()
 {
 	while (true)
 	{
-		cout << endl << "Status: ";
+		cout << "Status: ";
 		string userString = getUserString(4, MAX_STRING, "");
 		if (stringIsValidAssignmentStatus(userString))
 		{
@@ -129,7 +129,7 @@ AssignmentStatuses UserInterface::GetStatusFromUser()
 			default: return AssignmentStatuses::None;
 			}
 		}
-		cout << "Invalid Status. Retry.\nValid statuses include:\n1. assigned\n2. late\n3. completed\n" << ARROW << endl;
+		cout << "\nInvalid Status.\nValid statuses include:\n1. assigned\n2. late\n3. completed\n\n";
 	}
 }
 
@@ -153,7 +153,7 @@ Date UserInterface::GetAssignedDateFromUser(Date dueDate)
 		{
 			return assignedDate;
 		}
-		cout << "Assigned Date must be before Due Date." << endl;
+		cout << "Assigned Date must be before Due Date." << endl << ARROW;
 	}
 }
 
@@ -177,7 +177,7 @@ Date UserInterface::GetDueDateFromUser(Date assignedDate)
 		{
 			return dueDate;
 		}
-		cout << "Due Date must be after Assigned Date." << endl;
+		cout << "Due Date must be after Assigned Date." << endl << ARROW;
 	}
 }
 
