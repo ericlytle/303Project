@@ -22,31 +22,30 @@ public:
 	int NumberOfClosedAssignments();
 	int NumberOfOpenAssignments();
 	void DeleteAssignment(Date assignedDate);
-	void SaveFileLocation(string fileName);
-	string SaveFileLocation();
 	queue<Assignment> GetAllAssignments();
 	queue<Assignment> Save();
 private:
 	bool _isDirty;
-	string _saveFileName;
 	list<Assignment> _assignments;
 	list<Assignment> _completedAssignments;
 	list<Assignment>::iterator it;
 };
  
 AssignmentManager::AssignmentManager()
-{ 
-	_saveFileName = "";
+{
 	_isDirty = false;
 }
 
 Assignment AssignmentManager::GetAssignment(Date assignedDate)
 {
-	for (it = _assignments.begin(); it != _assignments.end(); ++it)
+	if (!_assignments.empty())
 	{
-		if (it->AssignedDate() == assignedDate)
+		for (it = _assignments.begin(); it != _assignments.end(); ++it)
 		{
-			return *it;
+			if (it->AssignedDate() == assignedDate)
+			{
+				return *it;
+			}
 		}
 	}
 	throw::exception("ASSIGNMENT NOT FOUND");
@@ -59,14 +58,17 @@ const bool AssignmentManager::IsDirty() const
 
 Assignment AssignmentManager::GetAssignment(unsigned int id)
 {
-	it = _assignments.begin();
-	while (it != _assignments.end())
+	if (!_assignments.empty())
 	{
-		if (it->ID() == id)
+		it = _assignments.begin();
+		while (it != _assignments.end())
 		{
-			return *it;
+			if (it->ID() == id)
+			{
+				return *it;
+			}
+			++it;
 		}
-		++it;
 	}
 	throw::exception("ASSIGNMENT NOT FOUND");
 }
