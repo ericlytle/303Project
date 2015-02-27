@@ -35,7 +35,7 @@ void main()
 				{
 					ui.AssignmentAlreadyExists(); // assignment already exists, did not add
 				}
-				ui.SuccessfulAdd(); // add was successful
+				ui.Success(); // add was successful
 			}
 			break;
 		case 'B': // Edit Assignment
@@ -52,7 +52,7 @@ void main()
 					{
 						ui.AssignmentDoesNotExist(); // assignment does not exists, did not edit
 					}
-					ui.SuccessfulEdit(); // edit was successful
+					ui.Success(); // edit was successful
 				}
 			case 'B': // Edit Description
 				while (true)
@@ -63,7 +63,7 @@ void main()
 					{
 						ui.AssignmentDoesNotExist();
 					}
-					ui.SuccessfulEdit();
+					ui.Success();
 				}
 			default:
 				break;
