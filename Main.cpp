@@ -21,7 +21,8 @@ void main()
 	char choice;
 
 	// program outer loop
-	while (true)
+	bool run = true;
+	while (run)
 	{
 		// Show main menu, get choice
 		choice = ui.Menu_Main();
@@ -115,6 +116,18 @@ void main()
 		case 'E': // Display Number of Late Assignments
 			// ui.Message_NumberOfLateAssignments(am.NumberOfLateAssignments());
 			break; // End Display Number of Late Assignments
+
+		case 'I': // Import
+			// IMPORT DATA HERE
+			break; // End Import Data
+
+		case 'S': // Save
+			// PERFORM SAVE (EXPORT) HERE
+			break; // End Save
+
+		case 'Q': // Quit
+			run = false;
+			break;
 
 		default:
 			break;
