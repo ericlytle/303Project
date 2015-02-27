@@ -3,6 +3,9 @@
 #include "Assignment.h"
 #include <queue>
 
+// AssignmentManager
+// This class manages a collection of Assignment objects
+
 class AssignmentManager
 {
 public:

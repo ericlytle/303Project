@@ -5,6 +5,8 @@
 #include "Date.h"
 #include "AssignmentStatus.h"
 
+// Assignment
+// This class models an individual homework assignment
 
 class Assignment 
 {
