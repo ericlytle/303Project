@@ -119,7 +119,7 @@ void AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 			else
 			{
 				it = _assignments.begin();
-				while (newAssignment.DueDate() > it->DueDate())
+				while (newAssignment.DueDate() >= it->DueDate())
 				{
 					++it;
 				}
@@ -147,7 +147,7 @@ void AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 			else
 			{
 				it = _completedAssignments.begin();
-				while (newAssignment.DueDate() > it->DueDate())
+				while (newAssignment.DueDate() >= it->DueDate())
 				{
 					++it;
 				}
@@ -186,7 +186,6 @@ void AssignmentManager::EditAssignment(Date assignedDate, string newDescription)
 
 queue<Assignment> AssignmentManager::GetAllAssignments()
 {
-	UserInterface ui;
 	queue<Assignment> allAssignments;
 	it = _assignments.begin();
 	while (it != _assignments.end())

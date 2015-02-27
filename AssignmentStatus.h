@@ -1,7 +1,1 @@
-#pragma once
-
-class AssignmentStatuses
-{
-public:
-	enum {None,Assigned,Completed,Late};
-};
+//replace with original code you wrote 
