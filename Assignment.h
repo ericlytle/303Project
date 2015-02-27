@@ -24,6 +24,7 @@ public:
 	Date DueDate();
 	int RevisionNumber();
 	string Description();
+	string StatusToString();
 
 	// Public Setters
 	void AssignedDate(Date assignedDate);
@@ -109,6 +110,11 @@ int Assignment::RevisionNumber()
 string Assignment::Description()
 {
 	return _description;
+}
+
+string Assignment::StatusToString()
+{
+	return _status.ValueToString();
 }
 
 // Public Setters
