@@ -221,6 +221,8 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 //bool CompleteAssignment(Date assignedDate)
 //{
 //	return true; // NOT YET DEFINED
+// Be sure to increment _numberOfLateAssignments if needed,
+// and set _isDirty to true;
 //}
 
 bool AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
