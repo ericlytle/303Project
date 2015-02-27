@@ -71,24 +71,24 @@ UserInterface::UserInterface()
 
 char UserInterface::Menu_EditAssignment()
 {
-	cout << "Choose from one of the following:\n\
-							[A]: Edit Due Date\n\
-											  [B]: Edit Description\n\
-											  					  [Q]: Quit" << ARROW;
+	cout << "Choose from one of the following: " << endl;
+	cout << "[A]: Edit Due Date " << endl;
+	cout << "[B]: Edit Description " << endl;
+	cout << "[Q]: Quit " << endl << ARROW;
 	return getUserMenuChoice("ABQabq");
 }
 
 char UserInterface::Menu_Main()
 {
-	cout << "Choose from one of the following:\n\
-				[A]: Add Assignment\n\
-					[B]: Edit Assignment\n\
-						[C]: Complete Assignment\n\
-							[D]: Display Assignments\n\
-								[E]: Display Number of Late Assignments\n\
-									[I]: Import Assignments\n\
-										[S]: Save\n\
-											[Q]: Quit\n" << ARROW;
+	cout << "Choose from one of the following: " << endl;
+	cout << "[A]: Add Assignment " << endl;
+	cout << "[B]: Edit Assignment " << endl;
+	cout << "[C]: Complete Assignment " << endl;
+	cout << "[D]: Display Assignments " << endl;
+	cout << "[E]: Display Number of Late Assignments " << endl;
+	cout << "[I]: Import Assignments " << endl;
+	cout << "[S]: Save " << endl;
+	cout << "[Q]: Quit  " << endl << ARROW;
 	return getUserMenuChoice("ABCDEISQabcdeisq");
 }
 
