@@ -33,7 +33,15 @@ void main()
 			while (true)
 			{
 				dueDate = ui.GetDueDateFromUser(); // due date
-				assignedDate = ui.GetAssignedDateFromUser(dueDate); // assigned date (with date range check)
+				while (true)
+				{
+					assignedDate = ui.GetAssignedDateFromUser(dueDate); // assigned date (with date range check)
+					if (!am.AssignmentExists(assignedDate)) // check for existence
+					{
+						break;
+					}
+					ui.Message_AssignmentAlreadyExists(); // assignment already exists
+				}
 				status = ui.GetStatusFromUser(); // status
 				description = ui.GetDescriptionFromUser(); // description
 				if (!am.AddAssignment(assignedDate, dueDate, status, description)) // attempt an add
@@ -52,11 +60,19 @@ void main()
 			case 'A': // Edit Due Date
 				while (true)
 				{
-					assignedDate = ui.GetAssignedDateFromUser(); // which assignment?
-					newDueDate = ui.GetDueDateFromUser(); // new due date
+					while (true)
+					{
+						assignedDate = ui.GetAssignedDateFromUser(); // which assignment?
+						if (am.AssignmentExists(assignedDate)) // check for existence
+						{
+							break;
+						}
+						ui.Message_AssignmentDoesNotExist();
+					}
+					newDueDate = ui.GetDueDateFromUser(assignedDate); // new due date (with date range check)
 					if (!am.EditAssignment(assignedDate, newDueDate)) // attempt an edit
 					{
-						ui.Message_AssignmentDoesNotExist(); // assignment does not exists, did not edit
+						ui.Message_Failed(); // edit failed
 					}
 					ui.Message_Success(); // edit was successful
 				}

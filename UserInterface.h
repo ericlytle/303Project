@@ -190,7 +190,7 @@ Date UserInterface::GetDueDateFromUser(Date assignedDate)
 string UserInterface::GetDescriptionFromUser()
 // Gets a description from the user
 {
-	cout << endl << "Description: ";
+	cout << "Description: ";
 	return getLineFromUser();
 }
 
@@ -346,13 +346,13 @@ string UserInterface::getLineFromUser()
 		string desc;
 		cin.ignore();
 		getline(cin, desc);
-		if (desc.length() > MAX_LINE)
+		if (desc.size() <= MAX_LINE)
 		{
 			return desc;
 		}
 		else
 		{
-			cout << "Too long. Limit is " << MAX_LINE << " characters. Try again." << endl;
+			cout << "Too long. Upper limit is " << MAX_LINE << " characters." << endl;
 		}
 	}
 }
