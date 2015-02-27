@@ -1,24 +1,23 @@
 #pragma once
 
-#include <stdio.h>
-#include <string>
-#include "Date.h"
-#include "Constants.h"
+#include <algorithm>
 #include "Assignment.h"
-#include <iostream>
+#include <ctype.h>
+#include "Date.h"
 #include <fstream>
-#include <sstream>
+#include <iostream>
 #include <limits>
 #include <math.h>
-#include <algorithm>
-#include <ctype.h>
+#include <stdio.h>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
-const unsigned int MAX_STRING = 50; // max length of user input string for cin>>
-const unsigned int MAX_LINE = 100; // max length of user input line for getline()
-const string EXT = ".txt"; // valid file extension
 const string ARROW = "-->"; // decorative arrow symbol
+const string EXT = ".txt"; // valid file extension
+const unsigned int MAX_LINE = 100; // max length of user input line for getline()
+const unsigned int MAX_STRING = 50; // max length of user input string for cin>>
 
 class UserInterface
 {
@@ -60,6 +59,8 @@ private:
 	string getLineFromUser();
 	string getUserString(int minLength, int maxLength, string validInput);
 };
+
+// Default Constructor
 
 UserInterface::UserInterface()
 {
