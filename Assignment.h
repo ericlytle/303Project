@@ -26,7 +26,7 @@ public:
 	void Description(string description);
 	int RevisionNumber();
 private:
-	AssignmentStatuses _status;
+	AssignmentStatus _status;
 	int _revisionNumber;
 	Date _assignedDate;
 	Date _dueDate;
