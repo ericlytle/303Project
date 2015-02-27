@@ -18,6 +18,9 @@ public:
 	bool AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
 	bool EditAssignment(Date assignedDate, Date newDueDate);
 	bool EditAssignment(Date assignedDate, string newDescription);
+	int TotalNumberOfAssignments();
+	int NumberOfClosedAssignments();
+	int NumberOfOpenAssignments();
 	void DeleteAssignment(Date assignedDate);
 	void SaveFileLocation(string fileName);
 	string SaveFileLocation();
@@ -187,6 +190,21 @@ bool AssignmentManager::EditAssignment(Date assignedDate, string newDescription)
 		return _isDirty = true;
 	}
 	return false;
+}
+
+int AssignmentManager::TotalNumberOfAssignments()
+{
+	return _assignments.size() + _completedAssignments.size();
+}
+
+int AssignmentManager::NumberOfClosedAssignments()
+{
+	return _completedAssignments.size();
+}
+
+int AssignmentManager::NumberOfOpenAssignments()
+{
+	return _assignments.size();
 }
 
 queue<Assignment> AssignmentManager::GetAllAssignments()
