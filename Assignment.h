@@ -44,11 +44,7 @@ Assignment::Assignment()
 	_id = generateID();
 }
 
-Assignment::Assignment(
-						Date assignedDate, 
-						Date dueDate, 
-						AssignmentStatuses status, 
-						string description = "")
+Assignment::Assignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description = "")
 {
 	_assignedDate = assignedDate;
 	_dueDate = dueDate;

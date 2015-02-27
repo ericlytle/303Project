@@ -4,20 +4,25 @@ using namespace std;
 
 void main()
 {
+	// Initialize objects and variables
+	UserInterface ui;
+	AssignmentManager am;
+
+	Date dueDate;
+	Date assignedDate;
+	Date newDueDate;
+	Date newAssignedDate;
+
+	AssignmentStatuses status;
+
+	string description;
+	string newDescription;
+
+	char choice;
+
+	// program outer loop
 	while (true)
 	{
-		// Initialize objects and local variables
-		UserInterface ui;
-		AssignmentManager am;
-		Date dueDate;
-		Date assignedDate;
-		Date newDueDate;
-		Date newAssignedDate;
-		AssignmentStatuses status;
-		string description;
-		string newDescription;
-		char choice;
-
 		// Show main menu, get choice
 		choice = ui.MenuMain();
 
@@ -31,11 +36,11 @@ void main()
 				assignedDate = ui.GetAssignedDateFromUser(); // assigned date
 				status = ui.GetStatusFromUser(); // status
 				description = ui.GetDescriptionFromUser(); // description
-				if (!am.AddAssignment(assignedDate, dueDate, status, description)) // attempt add
+				if (!am.AddAssignment(assignedDate, dueDate, status, description)) // attempt an add
 				{
-					ui.AssignmentAlreadyExists(); // assignment already exists, did not add
+					ui.Message_AssignmentAlreadyExists(); // assignment already exists, did not add
 				}
-				ui.Success(); // add was successful
+				ui.Message_Success(); // add was successful
 			}
 			break;
 		case 'B': // Edit Assignment
@@ -48,22 +53,22 @@ void main()
 				{
 					assignedDate = ui.GetAssignedDateFromUser(); // which assignment?
 					newDueDate = ui.GetDueDateFromUser(); // new due date
-					if (!am.EditAssignment(assignedDate, newDueDate)) // attempt edit
+					if (!am.EditAssignment(assignedDate, newDueDate)) // attempt an edit
 					{
-						ui.AssignmentDoesNotExist(); // assignment does not exists, did not edit
+						ui.Message_AssignmentDoesNotExist(); // assignment does not exists, did not edit
 					}
-					ui.Success(); // edit was successful
+					ui.Message_Success(); // edit was successful
 				}
 			case 'B': // Edit Description
 				while (true)
 				{
 					assignedDate = ui.GetAssignedDateFromUser(); // which assignment?
 					newDescription = ui.GetDescriptionFromUser(); // new description
-					if (!am.EditAssignment(assignedDate, newDescription)) // attempt edit
+					if (!am.EditAssignment(assignedDate, newDescription)) // attempt an edit
 					{
-						ui.AssignmentDoesNotExist();
+						ui.Message_AssignmentDoesNotExist();
 					}
-					ui.Success();
+					ui.Message_Success();
 				}
 			case 'Q': // Quit Edit Menu
 			default:
