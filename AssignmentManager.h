@@ -75,28 +75,34 @@ Assignment AssignmentManager::GetAssignment(unsigned int id)
 
 bool AssignmentManager::AssignmentExists(Assignment assignment)
 {
-	it = _assignments.begin();
-	while (it != _assignments.end())
+	if (!_assignments.empty())
 	{
-		if (*it == assignment)
+		it = _assignments.begin();
+		while (it != _assignments.end())
 		{
-			return true;
+			if (*it == assignment)
+			{
+				return true;
+			}
+			++it;
 		}
-		++it;
 	}
 	return false;
 }
 
 bool AssignmentManager::AssignmentExists(Date assignedDate)
 {
-	it = _assignments.begin();
-	while (it != _assignments.end())
+	if (!_assignments.empty())
 	{
-		if (it->AssignedDate() == assignedDate)
+		it = _assignments.begin();
+		while (it != _assignments.end())
 		{
-			return true;
+			if (it->AssignedDate() == assignedDate)
+			{
+				return true;
+			}
+			++it;
 		}
-		++it;
 	}
 	return false;
 }
@@ -138,9 +144,9 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 	else if (newAssignment.Status() == AssignmentStatuses::Late 
 		  || newAssignment.Status() == AssignmentStatuses::Completed)
 	{
-		if (_assignments.empty())
+		if (_completedAssignments.empty())
 		{
-			_assignments.push_back(newAssignment);
+			_completedAssignments.push_back(newAssignment);
 		}
 		else
 		{

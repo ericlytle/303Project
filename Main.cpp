@@ -24,7 +24,7 @@ void main()
 	while (true)
 	{
 		// Show main menu, get choice
-		choice = ui.MenuMain();
+		choice = ui.Menu_Main();
 
 		// Evaluate choice
 		switch (choice)
@@ -45,7 +45,7 @@ void main()
 			break;
 		case 'B': // Edit Assignment
 			// Show Edit Assignment Menu, get choice
-			choice = ui.MenuEditAssignment();
+			choice = ui.Menu_EditAssignment();
 			switch (choice)
 			{
 			case 'A': // Edit Due Date
