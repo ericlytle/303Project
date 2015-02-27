@@ -65,6 +65,7 @@ void main()
 					}
 					ui.Success();
 				}
+			case 'Q': // Quit Edit Menu
 			default:
 				break;
 			}

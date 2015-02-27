@@ -19,14 +19,29 @@ using namespace std;
 const unsigned int MAX_STRING = 50; // max length of user input string
 const unsigned int MAX_LINE = 100; // max length of user input line
 const std::string EXT = ".txt"; // valid file extension
-const std::string MAIN_MENU_CHOICES = "ABCDEISQabcdeisq"; // valid input for main menu choice
 const std::string DATE_FORMAT = "(YYYY/MM/DD)"; // valid date format for user input
 const std::string ASSIGNED = "assignedAssignedASSIGNED"; // valid assignment status (1 of 3)
 const std::string LATE = "lateLateLATE"; // valid assignment status (2 of 3)
 const std::string COMPLETED = "completedCompletedCOMPLETED"; // valid assignment status (3 of 3)
 const std::string INVALID_DATE_TEXT = "Invalid Date. Retry. Makes sure date is in (YYYY/MM/DD) format"; // user message for invalid date
 const std::string INVALID_DATE_RANGE_TEXT = "Invalid Date Range. Retry. Due Date must be after Assigned Date"; // user message for invalid date range
+const std::string INVALID_STATUS_TEXT = "Invalid Status. Retry.\nValid statuses include:\n1. assigned\n2. late\n3. completed\n"; // user message for invalid status
 const std::string ARROW = "-->"; // decorative arrow symbol
+const std::string MENU_MAIN = "Choose from one of the following:\n\
+					[A]: Add Assignment\n\
+					[B]: Edit Assignment\n\
+					[C]: Complete Assignment\n\
+					[D]: Display Assignments\n\
+					[E]: Display Number of Late Assignments\n\
+					[I]: Import Assignments\n\
+					[S]: Save\n\
+					[Q]: Quit\n"; // user Main Menu
+const std::string MENU_EDIT_ASSIGNMENTS = "Choose from one of the following:\n\
+										  [A]: Edit Due Date\n\
+										  [B]: Edit Description\n\
+										  [Q]: Quit"; // user Edit Assignments Menu
+const std::string MAIN_MENU_CHOICES = "ABCDEISQabcdeisq"; // valid input for main menu choice
+const std::string EDIT_MENU_CHOICES = "ABQabq"; // valid input for edit assignments menu choice
 #pragma endregion
 
 
@@ -35,13 +50,19 @@ class UserInterface
 public:
 	// Constructor
 	UserInterface();
-	// Display to User Methods
+
+	// Public display to user
+	// // menus
 	char MenuMain();
 	char MenuEditAssignment();
+	// // print to screen
 	void PrintAssignment(Assignment assignment);
+	// // messaging
 	void AssignmentAlreadyExists();
 	void AssignmentDoesNotExist();
 	void Success();
+	void InvalidStatus();
+
 	// User Input Methods
 	Date GetDateFromUser();
 	Date GetAssignedDateFromUser();
@@ -68,23 +89,19 @@ private:
 	void invalidDateRangeMessage();
 };
 
-const string Menu = "Choose from one of the following:\n\
-								  [A]: Add Assignment\n\
-								  [B]: Edit Assignment\n\
-								  [C]: Complete Assignment\n\
-								  [D]: Display Assignments\n\
-								  [E]: Display Number of Late Assignments\n\
-								  [I]: Import Assignments\n\
-								  [S]: Save\n\
-								  [Q]: Quit\n";
-
 UserInterface::UserInterface() // Constructor
 { ; }
 
 char UserInterface::MenuMain()
 {
-	cout << Menu << ARROW;
+	cout << MENU_MAIN << ARROW;
 	return getUserMenuChoice(MAIN_MENU_CHOICES);
+}
+
+char UserInterface::MenuEditAssignment()
+{
+	cout << MENU_EDIT_ASSIGNMENTS << ARROW;
+	return getUserMenuChoice(EDIT_MENU_CHOICES);
 }
 
 void UserInterface::AssignmentAlreadyExists()
@@ -97,7 +114,7 @@ void UserInterface::AssignmentDoesNotExist()
 	cout << "Assignment does not exist.\n Cannot edit." << endl;
 }
 
-void UserInterface::Success();
+void UserInterface::Success()
 {
 	cout << "Operation was successful." << endl;
 }
@@ -147,15 +164,6 @@ string UserInterface::GetDescriptionFromUser()
 {
 	cout << endl << "Description: ";
 	return GetLineFromUser();
-}
-
-bool UserInterface::stringIsValidAssignmentStatus(string status)
-// returns True if string status matches one of the three
-// valid assignment status types, otherwise returns false
-{
-	return (isInString(status, ASSIGNED) && status.length() == 8)
-		|| (isInString(status, LATE) && status.length() == 4)
-		|| (isInString(status, COMPLETED) && status.length() == 9);
 }
 
 bool UserInterface::isInString(string s1, string s2)
@@ -233,8 +241,17 @@ AssignmentStatuses UserInterface::GetStatusFromUser()
 			default: return AssignmentStatuses::None;
 			}
 		}
-		cout << "Invalid Status. Retry.\nValid statuses include:\n1. assigned\n2. late\n3. completed\n-->";
+		cout << INVALID_STATUS_TEXT << ARROW << endl;
 	}
+}
+
+bool UserInterface::stringIsValidAssignmentStatus(string status)
+// returns True if string status matches one of the three
+// valid assignment status types, otherwise returns false
+{
+	return (isInString(status, ASSIGNED) && status.length() == 8)
+		|| (isInString(status, LATE) && status.length() == 4)
+		|| (isInString(status, COMPLETED) && status.length() == 9);
 }
 
 string UserInterface::GetLineFromUser()
@@ -339,15 +356,6 @@ void UserInterface::invalidDateMessage()
 // Message to user if date format is invalid
 {
 	cout << INVALID_DATE_TEXT << endl << ARROW;
-}
-
-void displayEditAssignmentMenu()
-{
-	cout << "Choose from the following:\n"
-		<< "[A]: Edit Due Date\n"
-		<< "[B]: Edit Description\n"
-		<< "[Q]: Quit\n"
-		<< ARROW;
 }
 
 void assignmentDoesNotExistMessage(Date date)
