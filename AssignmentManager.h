@@ -12,9 +12,9 @@ public:
 	const bool IsDirty() const;
 	bool AssignmentExists(Assignment assignment);
 	bool AssignmentExists(Date assignedDate);
-	void AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
-	void EditAssignment(Date assignedDate, Date newDueDate);
-	void EditAssignment(Date assignedDate, string newDescription);
+	bool AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
+	bool EditAssignment(Date assignedDate, Date newDueDate);
+	bool EditAssignment(Date assignedDate, string newDescription);
 	void DeleteAssignment(Date assignedDate);
 	void SaveFileLocation(string fileName);
 	string SaveFileLocation();
@@ -93,11 +93,11 @@ bool AssignmentManager::AssignmentExists(Date assignedDate)
 	return false;
 }
 
-void AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description)
+bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description)
 {
 	if (AssignmentExists(assignedDate))
 	{
-		return;
+		return false;
 	}
 	Assignment newAssignment(assignedDate, dueDate, status, description);
 	if (newAssignment.Status() == AssignmentStatuses::Assigned)
@@ -155,10 +155,10 @@ void AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 			}
 		}
 	}
-	_isDirty = true;
+	return _isDirty = true;
 }
 
-void AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
+bool AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
 {
 	if (AssignmentExists(assignedDate))
 	{
@@ -167,11 +167,12 @@ void AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
 			++it;
 		}
 		it->DueDate(newDueDate);
-		_isDirty = true;
+		return _isDirty = true;
 	}
+	return false;
 }
 
-void AssignmentManager::EditAssignment(Date assignedDate, string newDescription)
+bool AssignmentManager::EditAssignment(Date assignedDate, string newDescription)
 {
 	if (AssignmentExists(assignedDate))
 	{
@@ -180,8 +181,9 @@ void AssignmentManager::EditAssignment(Date assignedDate, string newDescription)
 			++it;
 		}
 		it->Description(newDescription);
-		_isDirty = true;
+		return _isDirty = true;
 	}
+	return false;
 }
 
 queue<Assignment> AssignmentManager::GetAllAssignments()
