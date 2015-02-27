@@ -14,7 +14,7 @@
 
 using namespace std;
 
-const string ARROW = "-->"; // decorative arrow symbol
+const string ARROW = "--> "; // decorative arrow symbol
 const string EXT = ".txt"; // valid file extension
 const unsigned int MAX_LINE = 100; // max length of user input line for getline()
 const unsigned int MAX_STRING = 50; // max length of user input string for cin>>
@@ -328,7 +328,7 @@ Date UserInterface::getDateFromUser()
 			Date userDate(userString);
 			return userDate;
 		}
-		cout << "Invalid Date. Retry. Makes sure date is in (YYYY/MM/DD) format." << endl;
+		cout << "Invalid Date. Retry. Makes sure date is in (YYYY/MM/DD) format. " << endl << ARROW;
 	}
 }
 
@@ -362,8 +362,8 @@ string UserInterface::getUserString(int minLength, int maxLength, string validIn
 	{
 		cin >> userString;
 		if (validInput != "" && !isInString(userString, validInput)) cout << "Invalid input. " << endl;
-		else if (static_cast<int>(userString.length()) < minLength) cout << "Too short. Limit is " << minLength << " characters. " << endl;
-		else if (static_cast<int>(userString.length()) > maxLength) cout << "Too long. Limit is " << maxLength << " characters. " << endl;
+		else if (static_cast<int>(userString.length()) < minLength) cout << "Too short. Lower limit is " << minLength << " characters. " << endl;
+		else if (static_cast<int>(userString.length()) > maxLength) cout << "Too long. Upper limit is " << maxLength << " characters. " << endl;
 		else return userString;
 	}
 }

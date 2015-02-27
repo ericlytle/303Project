@@ -33,7 +33,7 @@ void main()
 			while (true)
 			{
 				dueDate = ui.GetDueDateFromUser(); // due date
-				assignedDate = ui.GetAssignedDateFromUser(); // assigned date
+				assignedDate = ui.GetAssignedDateFromUser(dueDate); // assigned date (with date range check)
 				status = ui.GetStatusFromUser(); // status
 				description = ui.GetDescriptionFromUser(); // description
 				if (!am.AddAssignment(assignedDate, dueDate, status, description)) // attempt an add
