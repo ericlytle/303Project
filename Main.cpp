@@ -76,6 +76,7 @@ void main()
 					}
 					ui.Message_Success(); // edit was successful
 				}
+				break;
 			case 'B': // Edit Description
 				while (true)
 				{

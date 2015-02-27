@@ -54,6 +54,7 @@ private:
 	bool isNumeric(char c);
 	bool stringIsValidAssignmentStatus(string status);
 	bool stringIsValidDate(string d);
+
 	// Private User Input
 	Date getDateFromUser();
 	char getUserMenuChoice(string validInput);
@@ -72,10 +73,10 @@ UserInterface::UserInterface()
 
 char UserInterface::Menu_EditAssignment()
 {
-	cout << "Choose from one of the following: " << endl;
-	cout << "[A]: Edit Due Date " << endl;
-	cout << "[B]: Edit Description " << endl;
-	cout << "[Q]: Quit " << endl << ARROW;
+	cout << "   What would you like to edit? " << endl;
+	cout << "   [A]: Edit Due Date " << endl;
+	cout << "   [B]: Edit Description " << endl;
+	cout << "   [Q]: Quit " << endl << ARROW;
 	return getUserMenuChoice("ABQabq");
 }
 
@@ -95,12 +96,12 @@ char UserInterface::Menu_Main()
 
 void UserInterface::Message_AssignmentAlreadyExists()
 {
-	cout << "\n\nAssignment already exists.\n Did not add.\n\n" << endl;
+	cout << "\n\nAssignment already exists.\nDid not add.\n\n" << endl;
 }
 
 void UserInterface::Message_AssignmentDoesNotExist()
 {
-	cout << "\n\nAssignment does not exist.\n Cannot edit.\n\n" << endl;
+	cout << "\n\nAssignment does not exist.\nCannot edit.\n\n" << endl;
 }
 
 void UserInterface::Message_Failed()
