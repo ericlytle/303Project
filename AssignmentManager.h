@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Assignment.h"
+#include "AssignmentQueue.h"
 #include <queue>
 
 // AssignmentManager
@@ -21,8 +22,8 @@ public:
 	int NumberOfLateAssignments();
 	int NumberOfOpenAssignments();
 	int TotalNumberOfAssignments();
-	queue<Assignment> GetAllAssignments();
-	queue<Assignment> Save();
+	AssignmentQueue GetAllAssignments();
+	AssignmentQueue Save();
 
 	// Public Setters
 	bool AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
@@ -123,7 +124,7 @@ int AssignmentManager::TotalNumberOfAssignments()
 	return _assignments.size() + _completedAssignments.size();
 }
 
-queue<Assignment> AssignmentManager::GetAllAssignments()
+AssignmentQueue AssignmentManager::GetAllAssignments()
 {
 	queue<Assignment> allAssignments;
 	it = _assignments.begin();
@@ -141,7 +142,7 @@ queue<Assignment> AssignmentManager::GetAllAssignments()
 	return allAssignments;
 }
 
-queue<Assignment> AssignmentManager::Save()
+AssignmentQueue AssignmentManager::Save()
 {
 	_isDirty = false;
 	return GetAllAssignments();

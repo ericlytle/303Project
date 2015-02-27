@@ -36,6 +36,9 @@
     <ClInclude Include="AssignmentStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AssignmentQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

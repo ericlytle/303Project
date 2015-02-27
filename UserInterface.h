@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include "Assignment.h"
+#include "AssignmentQueue.h"
 #include <ctype.h>
 #include "Date.h"
 #include <fstream>
@@ -11,7 +12,6 @@
 #include <stdio.h>
 #include <sstream>
 #include <string>
-#include <queue>
 
 using namespace std;
 
@@ -29,7 +29,7 @@ public:
 	// Public Displays to User
 	char Menu_EditAssignment();
 	char Menu_Main();
-	void Print_Assignments(queue<Assignment> assignments); // NOT YET DEFINED
+	void Print_Assignments(AssignmentQueue assignments); // NOT YET DEFINED
 	void Message_AssignmentAlreadyExists();
 	void Message_AssignmentDoesNotExist();
 	void Message_Failed();
@@ -47,7 +47,7 @@ public:
 	string GetFileNameFromUser(int minLength = 1, int maxLength = MAX_STRING, string validExtension = "");
 
 	// Public Export/Import
-	void Export(queue<Assignment> assignments, string fileName); // NOT YET DEFINED
+	void Export(AssignmentQueue assignments, string fileName); // NOT YET DEFINED
 	void Import(); // NOT YET DEFINED
 
 private:
@@ -263,7 +263,7 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 //{
 //	; // NOT YET DEFINED
 //}
-//
+
 //void Import()
 //{
 //	; // NOT YET DEFINED

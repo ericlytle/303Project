@@ -66,6 +66,7 @@
   <ItemGroup>
     <ClInclude Include="Assignment.h" />
     <ClInclude Include="AssignmentManager.h" />
+    <ClInclude Include="AssignmentQueue.h" />
     <ClInclude Include="AssignmentStatus.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Date.h" />
