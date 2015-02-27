@@ -32,6 +32,7 @@ public:
 	void Message_AssignmentAlreadyExists();
 	void Message_AssignmentDoesNotExist();
 	void Message_InvalidStatus();
+	void Message_Failed();
 	void Message_Success();
 
 	// Public User Input Methods
@@ -94,17 +95,22 @@ char UserInterface::Menu_Main()
 
 void UserInterface::Message_AssignmentAlreadyExists()
 {
-	cout << "Assignment already exists.\n Did not add." << endl;
+	cout << "\n\nAssignment already exists.\n Did not add.\n\n" << endl;
 }
 
 void UserInterface::Message_AssignmentDoesNotExist()
 {
-	cout << "Assignment does not exist.\n Cannot edit." << endl;
+	cout << "\n\nAssignment does not exist.\n Cannot edit.\n\n" << endl;
+}
+
+void UserInterface::Message_Failed()
+{
+	cout << "\n\nOperation failed.\n\n";
 }
 
 void UserInterface::Message_Success()
 {
-	cout << "Operation was successful." << endl;
+	cout << "\n\nOperation was successful.\n\n";
 }
 
 // Public User Input
@@ -129,7 +135,7 @@ AssignmentStatuses UserInterface::GetStatusFromUser()
 			default: return AssignmentStatuses::None;
 			}
 		}
-		cout << "\nInvalid Status.\nValid statuses include:\n1. assigned\n2. late\n3. completed\n\n";
+		cout << "\nInvalid Status.\nValid statuses include:\n1. Assigned\n2. Late\n3. Completed\n\n";
 	}
 }
 

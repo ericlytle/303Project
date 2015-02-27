@@ -41,6 +41,7 @@ void main()
 					ui.Message_AssignmentAlreadyExists(); // assignment already exists, did not add
 				}
 				ui.Message_Success(); // add was successful
+				break;
 			}
 			break;
 		case 'B': // Edit Assignment
@@ -79,8 +80,5 @@ void main()
 		default:
 			break;
 		}
-
-
-		system("pause");
 	}
 }
