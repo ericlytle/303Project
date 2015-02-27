@@ -47,7 +47,7 @@ public:
 	string GetFileNameFromUser(int minLength = 1, int maxLength = MAX_STRING, string validExtension = "");
 
 	// Public Export/Import
-	void Export(Assignment assignment, string fileName); // NOT YET DEFINED
+	void Export(queue<Assignment> assignments, string fileName); // NOT YET DEFINED
 	void Import(); // NOT YET DEFINED
 
 private:
@@ -259,15 +259,15 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 
 // Public Export/Import
 
-void Export(Assignment assignment, string fileName)
-{
-	; // NOT YET DEFINED
-}
-
-void Import()
-{
-	; // NOT YET DEFINED
-}
+//void Export(queue<Assignment> assignments, string fileName)
+//{
+//	; // NOT YET DEFINED
+//}
+//
+//void Import()
+//{
+//	; // NOT YET DEFINED
+//}
 
 // Private Data Checks
 

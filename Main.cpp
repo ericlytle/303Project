@@ -18,6 +18,7 @@ void main()
 	AssignmentStatuses status;
 
 	string description;
+	string fileName;
 	string newDescription;
 
 	char choice;
@@ -123,7 +124,8 @@ void main()
 			break; // End Import Data
 
 		case 'S': // Save
-			// PERFORM SAVE (EXPORT) HERE
+			// fileName = ui.GetFileNameFromUser(5, 50, EXT); // get filename
+			// ui.Export(am.Save(), fileName); // perform save/export
 			break; // End Save
 
 		case 'Q': // Quit
