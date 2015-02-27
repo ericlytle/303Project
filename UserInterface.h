@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <sstream>
 #include <string>
+#include <queue>
 
 using namespace std;
 
@@ -28,12 +29,13 @@ public:
 	// Public Displays to User
 	char Menu_EditAssignment();
 	char Menu_Main();
-	void Print_Assignment(Assignment assignment); // NOT YET DEFINED
+	void Print_Assignments(queue<Assignment> assignments); // NOT YET DEFINED
 	void Message_AssignmentAlreadyExists();
 	void Message_AssignmentDoesNotExist();
-	void Message_InvalidStatus();
 	void Message_Failed();
+	void Message_NumberOfLateAssignments(int number);
 	void Message_Success();
+	void Message_WhichAssignment();
 
 	// Public User Input Methods
 	AssignmentStatuses GetStatusFromUser();
@@ -60,6 +62,9 @@ private:
 	char getUserMenuChoice(string validInput);
 	string getLineFromUser();
 	string getUserString(int minLength, int maxLength, string validInput);
+
+	// Private Print Methods
+	void print_Assignment(Assignment assignment); // NOT YET DEFINED
 };
 
 // Default Constructor
@@ -94,6 +99,13 @@ char UserInterface::Menu_Main()
 	return getUserMenuChoice("ABCDEISQabcdeisq");
 }
 
+//void UserInterface::Print_Assignments(queue<Assignment> assignments)
+//{
+//	; // NOT YET DEFINED
+//	// print heading info, etc for a list of all assignments
+//	// Iterate through the queue, calling printAssignment() for each
+//}
+
 void UserInterface::Message_AssignmentAlreadyExists()
 {
 	cout << "\n\nAssignment already exists.\nDid not add.\n\n" << endl;
@@ -109,9 +121,19 @@ void UserInterface::Message_Failed()
 	cout << "\n\nOperation failed.\n\n";
 }
 
+void Message_NumberOfLateAssignments(int number)
+{
+	cout << "There are " << number << " late assignments." << endl;
+}
+
 void UserInterface::Message_Success()
 {
 	cout << "\n\nOperation was successful.\n\n";
+}
+
+void UserInterface::Message_WhichAssignment()
+{
+	cout << "Which assignment would you like to edit?\n";
 }
 
 // Public User Input
@@ -374,3 +396,11 @@ string UserInterface::getUserString(int minLength, int maxLength, string validIn
 		else return userString;
 	}
 }
+
+// Private Print Methods
+
+//void UserInterface::print_Assignment(Assignment assignment)
+//{
+//	; // NOT YET DEFINED
+//	// print one assignment to the screen
+//}

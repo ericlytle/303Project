@@ -18,6 +18,7 @@ public:
 	bool AssignmentExists(Assignment assignment);
 	const bool IsDirty() const;
 	int NumberOfClosedAssignments();
+	int NumberOfLateAssignments();
 	int NumberOfOpenAssignments();
 	int TotalNumberOfAssignments();
 	queue<Assignment> GetAllAssignments();
@@ -25,12 +26,14 @@ public:
 
 	// Public Setters
 	bool AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
+	bool CompleteAssignment(Date assignedDate); // NOT YET DEFINED
 	bool EditAssignment(Date assignedDate, Date newDueDate);
 	bool EditAssignment(Date assignedDate, string newDescription);
 
 private:
 	// Private Data
 	bool _isDirty;
+	int _numberOfLateAssignments;
 	list<Assignment> _assignments;
 	list<Assignment> _completedAssignments;
 	list<Assignment>::iterator it;
@@ -40,6 +43,7 @@ private:
 
 AssignmentManager::AssignmentManager()
 {
+	_numberOfLateAssignments = 0;
 	_isDirty = false;
 }
 
@@ -102,6 +106,11 @@ const bool AssignmentManager::IsDirty() const
 int AssignmentManager::NumberOfClosedAssignments()
 {
 	return _completedAssignments.size();
+}
+
+int AssignmentManager::NumberOfLateAssignments()
+{
+	return _numberOfLateAssignments;
 }
 
 int AssignmentManager::NumberOfOpenAssignments()
@@ -202,8 +211,17 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 			}
 		}
 	}
+	if (newAssignment.Status() == AssignmentStatuses::Late)
+	{
+		++_numberOfLateAssignments;
+	}
 	return _isDirty = true;
 }
+
+//bool CompleteAssignment(Date assignedDate)
+//{
+//	return true; // NOT YET DEFINED
+//}
 
 bool AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
 {
