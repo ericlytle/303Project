@@ -9,36 +9,45 @@
 class AssignmentManager
 {
 public:
+	// Constructor
 	AssignmentManager();
+
+	// Public Getters
 	Assignment GetAssignment(Date assignedDate);
-	Assignment GetAssignment(unsigned int id);
-	const bool IsDirty() const;
-	bool AssignmentExists(Assignment assignment);
 	bool AssignmentExists(Date assignedDate);
+	bool AssignmentExists(Assignment assignment);
+	const bool IsDirty() const;
+	int NumberOfClosedAssignments();
+	int NumberOfOpenAssignments();
+	int TotalNumberOfAssignments();
+	queue<Assignment> GetAllAssignments();
+	queue<Assignment> Save();
+
+	// Public Setters
 	bool AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
 	bool EditAssignment(Date assignedDate, Date newDueDate);
 	bool EditAssignment(Date assignedDate, string newDescription);
-	int TotalNumberOfAssignments();
-	int NumberOfClosedAssignments();
-	int NumberOfOpenAssignments();
-	void DeleteAssignment(Date assignedDate);
-	queue<Assignment> GetAllAssignments();
-	queue<Assignment> Save();
+
 private:
+	// Private Data
 	bool _isDirty;
 	list<Assignment> _assignments;
 	list<Assignment> _completedAssignments;
 	list<Assignment>::iterator it;
 };
  
+// Constructor
+
 AssignmentManager::AssignmentManager()
 {
 	_isDirty = false;
 }
 
+// Public Getters
+
 Assignment AssignmentManager::GetAssignment(Date assignedDate)
 {
-	if (!_assignments.empty())
+	if (AssignmentExists(assignedDate))
 	{
 		for (it = _assignments.begin(); it != _assignments.end(); ++it)
 		{
@@ -46,28 +55,6 @@ Assignment AssignmentManager::GetAssignment(Date assignedDate)
 			{
 				return *it;
 			}
-		}
-	}
-	throw::exception("ASSIGNMENT NOT FOUND");
-}
-
-const bool AssignmentManager::IsDirty() const
-{
-	return _isDirty;
-}
-
-Assignment AssignmentManager::GetAssignment(unsigned int id)
-{
-	if (!_assignments.empty())
-	{
-		it = _assignments.begin();
-		while (it != _assignments.end())
-		{
-			if (it->ID() == id)
-			{
-				return *it;
-			}
-			++it;
 		}
 	}
 	throw::exception("ASSIGNMENT NOT FOUND");
@@ -107,6 +94,52 @@ bool AssignmentManager::AssignmentExists(Date assignedDate)
 	return false;
 }
 
+const bool AssignmentManager::IsDirty() const
+{
+	return _isDirty;
+}
+
+int AssignmentManager::NumberOfClosedAssignments()
+{
+	return _completedAssignments.size();
+}
+
+int AssignmentManager::NumberOfOpenAssignments()
+{
+	return _assignments.size();
+}
+
+int AssignmentManager::TotalNumberOfAssignments()
+{
+	return _assignments.size() + _completedAssignments.size();
+}
+
+queue<Assignment> AssignmentManager::GetAllAssignments()
+{
+	queue<Assignment> allAssignments;
+	it = _assignments.begin();
+	while (it != _assignments.end())
+	{
+		allAssignments.push(*it);
+		++it;
+	}
+	it = _completedAssignments.begin();
+	while (it != _completedAssignments.end())
+	{
+		allAssignments.push(*it);
+		++it;
+	}
+	return allAssignments;
+}
+
+queue<Assignment> AssignmentManager::Save()
+{
+	_isDirty = false;
+	return GetAllAssignments();
+}
+
+// Public Setters
+
 bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description)
 {
 	if (AssignmentExists(assignedDate))
@@ -141,8 +174,8 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 			}
 		}
 	}
-	else if (newAssignment.Status() == AssignmentStatuses::Late 
-		  || newAssignment.Status() == AssignmentStatuses::Completed)
+	else if (newAssignment.Status() == AssignmentStatuses::Late
+		|| newAssignment.Status() == AssignmentStatuses::Completed)
 	{
 		if (_completedAssignments.empty())
 		{
@@ -198,43 +231,4 @@ bool AssignmentManager::EditAssignment(Date assignedDate, string newDescription)
 		return _isDirty = true;
 	}
 	return false;
-}
-
-int AssignmentManager::TotalNumberOfAssignments()
-{
-	return _assignments.size() + _completedAssignments.size();
-}
-
-int AssignmentManager::NumberOfClosedAssignments()
-{
-	return _completedAssignments.size();
-}
-
-int AssignmentManager::NumberOfOpenAssignments()
-{
-	return _assignments.size();
-}
-
-queue<Assignment> AssignmentManager::GetAllAssignments()
-{
-	queue<Assignment> allAssignments;
-	it = _assignments.begin();
-	while (it != _assignments.end())
-	{
-		allAssignments.push(*it);
-		++it;
-	}
-	it = _completedAssignments.begin();
-	while (it != _completedAssignments.end())
-	{
-		allAssignments.push(*it);
-		++it;
-	}
-	return allAssignments;
-}
-
-queue<Assignment> AssignmentManager::Save()
-{
-	_isDirty = false;
-	return GetAllAssignments();
 }
