@@ -8,6 +8,8 @@ void main()
 	UserInterface ui;
 	AssignmentManager am;
 
+	bool quit = false;
+
 	Date dueDate;
 	Date assignedDate;
 	Date newDueDate;
@@ -21,8 +23,7 @@ void main()
 	char choice;
 
 	// program outer loop
-	bool run = true;
-	while (run)
+	while (!quit)
 	{
 		// Show main menu, get choice
 		choice = ui.Menu_Main();
@@ -33,7 +34,7 @@ void main()
 		case 'A': //Add Assignment
 			while (true)
 			{
-				dueDate = ui.GetDueDateFromUser(); // due date
+				dueDate = ui.GetDueDateFromUser(); // due date (no date range check)
 				while (true)
 				{
 					assignedDate = ui.GetAssignedDateFromUser(dueDate); // assigned date (with date range check)
@@ -126,7 +127,7 @@ void main()
 			break; // End Save
 
 		case 'Q': // Quit
-			run = false;
+			quit = true;
 			break;
 
 		default:
