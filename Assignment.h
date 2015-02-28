@@ -1,40 +1,56 @@
 #pragma once
 
-#include <string>
-#include <list>
-#include "Date.h"
 #include "AssignmentStatus.h"
+#include "Date.h"
+#include <list>
+#include <string>
 
+// Assignment
+// This class models an individual homework assignment
 
 class Assignment 
 {
 public:
+	// Constructors
 	Assignment();
 	Assignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
+
+	// Public Getters
 	AssignmentStatuses Status();
 	bool IsLate();
-	bool operator ==(Assignment other) const;
-	const unsigned int ID() const;
-	void Status(AssignmentStatuses status);
+	const int ID() const;
 	Date AssignedDate();
-	void AssignedDate(Date assignedDate);
-	Date DueDate();
-	void DueDate(Date dueDate);
 	Date CompletedDate();
-	void CompletedDate(Date completedDate);
-	string Description();
-	void Description(string description);
+	Date DueDate();
 	int RevisionNumber();
+	string Description();
+	string StatusToString();
+
+	// Public Setters
+	void AssignedDate(Date assignedDate);
+	void CompletedDate(Date completedDate);
+	void Description(string description);
+	void DueDate(Date dueDate);
+	void Status(AssignmentStatuses status);
+
+	// Overloaded Operator
+	bool operator ==(Assignment other) const;
+
 private:
+	// Private Data
 	AssignmentStatus _status;
-	int _revisionNumber;
 	Date _assignedDate;
-	Date _dueDate;
 	Date _completedDate;
+	Date _dueDate;
+	int _id;
+	int _revisionNumber;
 	string _description;
-	unsigned int generateID();
-	unsigned int _id;
+
+	// Private Methods
+	int generateID();
 };
+
+// Constructors
 
 Assignment::Assignment()
 {
@@ -44,11 +60,7 @@ Assignment::Assignment()
 	_id = generateID();
 }
 
-Assignment::Assignment(
-						Date assignedDate, 
-						Date dueDate, 
-						AssignmentStatuses status, 
-						string description = "")
+Assignment::Assignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description = "")
 {
 	_assignedDate = assignedDate;
 	_dueDate = dueDate;
@@ -58,16 +70,7 @@ Assignment::Assignment(
 	_id = generateID();
 }
 
-unsigned int Assignment::generateID()
-{
-	static unsigned int uid = 0;
-	return uid++;
-}
-
-const unsigned int Assignment::ID() const
-{
-	return _id;
-}
+// Public Getters
 
 AssignmentStatuses Assignment::Status()
 {
@@ -79,19 +82,42 @@ bool Assignment::IsLate()
 	return _status.Value() == AssignmentStatuses::Late;
 }
 
-void Assignment::Status(AssignmentStatuses status)
+const int Assignment::ID() const
 {
-	if (status != _status.Value())
-	{
-		_status.Value(status);
-		++_revisionNumber;
-	}
+	return _id;
 }
 
 Date Assignment::AssignedDate()
 {
 	return _assignedDate;
 }
+
+Date Assignment::CompletedDate()
+{
+	return _completedDate;
+}
+
+Date Assignment::DueDate()
+{
+	return _dueDate;
+}
+
+int Assignment::RevisionNumber()
+{
+	return _revisionNumber;
+}
+
+string Assignment::Description()
+{
+	return _description;
+}
+
+string Assignment::StatusToString()
+{
+	return _status.ValueToString();
+}
+
+// Public Setters
 
 void Assignment::AssignedDate(Date assignedDate)
 {
@@ -100,25 +126,6 @@ void Assignment::AssignedDate(Date assignedDate)
 		_assignedDate = assignedDate;
 		++_revisionNumber;
 	}
-}
-
-Date Assignment::DueDate()
-{
-	return _dueDate;
-}
-
-void Assignment::DueDate(Date dueDate)
-{
-	if (dueDate != _dueDate)
-	{
-		_dueDate = dueDate;
-		++_revisionNumber;
-	}
-}
-
-Date Assignment::CompletedDate()
-{
-	return _completedDate;
 }
 
 void Assignment::CompletedDate(Date completedDate)
@@ -138,11 +145,6 @@ void Assignment::CompletedDate(Date completedDate)
 	}
 }
 
-string Assignment::Description()
-{
-	return _description;
-}
-
 void Assignment::Description(string description)
 {
 	if (description != _description)
@@ -152,10 +154,25 @@ void Assignment::Description(string description)
 	}
 }
 
-int Assignment::RevisionNumber()
+void Assignment::DueDate(Date dueDate)
 {
-	return _revisionNumber;
+	if (dueDate != _dueDate)
+	{
+		_dueDate = dueDate;
+		++_revisionNumber;
+	}
 }
+
+void Assignment::Status(AssignmentStatuses status)
+{
+	if (status != _status.Value())
+	{
+		_status.Value(status);
+		++_revisionNumber;
+	}
+}
+
+// Overloaded Operators
 
 bool Assignment::operator==(Assignment other) const
 {
@@ -163,4 +180,12 @@ bool Assignment::operator==(Assignment other) const
 		&& _status.Value() == other.Status()
 		&& _dueDate == other.DueDate() 
 		&& _assignedDate == other.AssignedDate();
+}
+
+// Private Methods
+
+int Assignment::generateID()
+{
+	static int uid = 0;
+	return uid++;
 }

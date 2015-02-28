@@ -3,6 +3,10 @@
 #include <string>
 using namespace std;
 
+// AssignmentStatus
+// This class models an Assignment Status
+// Provides a useful interface for the AssignmentStatuses enum
+
 enum AssignmentStatuses
 {
 	None,
