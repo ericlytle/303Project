@@ -28,6 +28,7 @@ public:
 	// Public Setters
 	bool AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
 	bool CompleteAssignment(Date assignedDate); // NOT YET DEFINED
+	bool DeleteAssignment(Date assignedDate); // NOT YET DEFINED
 	bool EditAssignment(Date assignedDate, Date newDueDate);
 	bool EditAssignment(Date assignedDate, string newDescription);
 
@@ -224,6 +225,12 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 //	return true; // NOT YET DEFINED
 // Be sure to increment _numberOfLateAssignments if needed,
 // and set _isDirty to true;
+//}
+
+//bool DeleteAssignment(Date assignedDate)
+//{
+//	return true; // NOT YET DEFINED
+//	// remember to set _isDirty to true;
 //}
 
 bool AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
