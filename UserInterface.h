@@ -42,14 +42,16 @@ public:
 	AssignmentStatuses GetStatusFromUser();
 	Date GetAssignedDateFromUser();
 	Date GetAssignedDateFromUser(Date dueDate);
+	Date GetCompletedDateFromUser();
+	Date GetCompletedDateFromUser(Date assignedDate);
 	Date GetDueDateFromUser();
 	Date GetDueDateFromUser(Date assignedDate);
 	string GetDescriptionFromUser();
 	string GetFileNameFromUser(int minLength = 1, int maxLength = MAX_STRING, string validExtension = "");
 
 	// Public Export/Import
-	void Export(AssignmentQueue assignments, string fileName, bool dirty); // NOT YET DEFINED
-	AssignmentQueue Import(); 
+	void Export(AssignmentQueue assignments, string fileName, bool dirty);
+	AssignmentQueue Import();
 
 private:
 	// Private Data Field
@@ -194,6 +196,30 @@ Date UserInterface::GetAssignedDateFromUser(Date dueDate)
 	}
 }
 
+Date UserInterface::GetCompletedDateFromUser()
+// Gets a Completed Date from user
+// no date range check
+{
+	cout << "Completed Date: ";
+	return getDateFromUser();
+}
+
+Date UserInterface::GetCompletedDateFromUser(Date assignedDate)
+// Gets a Completed Date from user
+// Performs a date range check
+{
+	cout << "Completed Date: ";
+	while (true)
+	{
+		Date completedDate = getDateFromUser();
+		if (completedDate >= assignedDate)
+		{
+			return completedDate;
+		}
+		cout << "Completed Date must be after Assigned Date." << endl << ARROW;
+	}
+}
+
 Date UserInterface::GetDueDateFromUser()
 // Gets a Due Date from user
 // does not perform date range check
@@ -206,7 +232,7 @@ Date UserInterface::GetDueDateFromUser(Date assignedDate)
 // Gets a Due Date from user
 // Performs a date range check
 {
-	cout << "Assigned Date: ";
+	cout << "Due Date: ";
 	while (true)
 	{
 		Date dueDate = getDateFromUser();
@@ -503,8 +529,8 @@ void UserInterface::print_Assignment(Assignment assignment)
 // prints one assignment to the screen
 {
 	cout << "ASSIGNMENT NO. " << assignment.ID() << endl
-		 << "Assigned Date: " << assignment.AssignedDate().toString() << endl
-		 << "Due Date: " << assignment.DueDate().toString() << endl
-		 << "Description: " << assignment.Description() << endl
-		 << "Status: " << assignment.StatusToString() << endl << endl;
+		<< "Assigned Date: " << assignment.AssignedDate().toString() << endl
+		<< "Due Date: " << assignment.DueDate().toString() << endl
+		<< "Description: " << assignment.Description() << endl
+		<< "Status: " << assignment.StatusToString() << endl << endl;
 }
