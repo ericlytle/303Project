@@ -10,8 +10,9 @@ void main()
 
 	bool quit = false;
 
-	Date dueDate;
 	Date assignedDate;
+	Date dueDate;
+	Date completedDate;
 	Date newDueDate;
 	Date newAssignedDate;
 
@@ -104,11 +105,13 @@ void main()
 				}
 				ui.Message_AssignmentDoesNotExist();
 			}
-			//if (!am.CompleteAssignment(assignedDate)) // attempt to complete
-			//{
-			//	ui.Message_Failed();
-			//}
-			//ui.Message_Success();
+			completedDate = ui.GetCompletedDateFromUser(assignedDate); // get completed date (with range check)
+			if (!am.CompleteAssignment(assignedDate, completedDate)) // attempt to complete
+			{
+				ui.Message_Failed();
+				break;
+			}
+			ui.Message_Success();
 			break; // End Complete Assignment
 
 		case 'D': // Print Assignments to Screen
@@ -120,7 +123,7 @@ void main()
 			break; // End Display Number of Late Assignments
 
 		case 'I': // Import
-			am.AddAssignment(ui.Import());
+			am.AddAssignments(ui.Import());
 			break; // End Import Data
 
 		case 'S': // Save			

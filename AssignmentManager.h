@@ -26,10 +26,10 @@ public:
 	AssignmentQueue Save();
 
 	// Public Setters
+	bool AddAssignment(Assignment assignment);
 	bool AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
-	void AddAssignment(AssignmentQueue assignmentQueue);
-	bool CompleteAssignment(Date assignedDate); // NOT YET DEFINED
-	bool DeleteAssignment(Date assignedDate); // NOT YET DEFINED
+	void AddAssignments(AssignmentQueue assignmentQueue);
+	bool CompleteAssignment(Date assignedDate, Date completedDate);
 	bool EditAssignment(Date assignedDate, Date newDueDate);
 	bool EditAssignment(Date assignedDate, string newDescription);
 
@@ -40,6 +40,10 @@ private:
 	list<Assignment> _assignments;
 	list<Assignment> _completedAssignments;
 	list<Assignment>::iterator it;
+
+	// Private Functions
+	bool addToClosedList(Assignment assignment);
+	bool removeFromOpenList(Assignment assignment);
 };
  
 // Constructor
@@ -152,6 +156,11 @@ AssignmentQueue AssignmentManager::Save()
 
 // Public Setters
 
+bool AssignmentManager::AddAssignment(Assignment assignment)
+{
+	return AddAssignment(assignment.AssignedDate(), assignment.DueDate(), assignment.Status(), assignment.Description());
+}
+
 bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description)
 {
 
@@ -222,7 +231,7 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 	return _isDirty = true;
 }
 
-void AssignmentManager::AddAssignment(AssignmentQueue assignmentQueue)
+void AssignmentManager::AddAssignments(AssignmentQueue assignmentQueue)
 {
 	while (!assignmentQueue.IsEmpty())
 	{
@@ -231,18 +240,22 @@ void AssignmentManager::AddAssignment(AssignmentQueue assignmentQueue)
 	}
 }
 
-//bool CompleteAssignment(Date assignedDate)
-//{
-//	return true; // NOT YET DEFINED
-// Be sure to increment _numberOfLateAssignments if needed,
-// and set _isDirty to true;
-//}
-
-//bool DeleteAssignment(Date assignedDate)
-//{
-//	return true; // NOT YET DEFINED
-//	// remember to set _isDirty to true;
-//}
+bool AssignmentManager::CompleteAssignment(Date assignedDate, Date completedDate)
+{
+	Assignment assignmentToRemove = GetAssignment(assignedDate);
+	Assignment assignmentToAdd = GetAssignment(assignedDate);
+	assignmentToAdd.CompletedDate(completedDate);
+	if (assignmentToAdd.Status() == AssignmentStatuses::Late) ++_numberOfLateAssignments;
+	if (!removeFromOpenList(assignmentToRemove))
+	{
+		return false;
+	}
+	if (!addToClosedList(assignmentToAdd))
+	{
+		return false;
+	}
+	return _isDirty = true;
+}
 
 bool AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
 {
@@ -268,6 +281,37 @@ bool AssignmentManager::EditAssignment(Date assignedDate, string newDescription)
 		}
 		it->Description(newDescription);
 		return _isDirty = true;
+	}
+	return false;
+}
+
+// Private Functions
+
+bool AssignmentManager::addToClosedList(Assignment assignment)
+{
+	if (assignment.Status() == AssignmentStatuses::Late
+		|| assignment.Status() == AssignmentStatuses::Completed)
+	{
+		AddAssignment(assignment);
+		return _isDirty = true;
+	}
+	return false;
+}
+
+bool AssignmentManager::removeFromOpenList(Assignment assignment)
+{
+	if (!_assignments.empty())
+	{
+		it = _assignments.begin();
+		while (it != _assignments.end())
+		{
+			if (*it == assignment)
+			{
+				_assignments.erase(it);
+				return _isDirty = true;
+			}
+			++it;
+		}
 	}
 	return false;
 }
