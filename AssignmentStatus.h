@@ -21,7 +21,6 @@ class AssignmentStatus
 {
 public:
 	AssignmentStatus();
-	AssignmentStatus(string statusStr);
 	const AssignmentStatuses Value() const;
 	const bool HasValue() const;
 	const string ValueToString() const;
@@ -33,17 +32,6 @@ private:
 AssignmentStatus::AssignmentStatus()
 {
 	value = AssignmentStatuses::None;
-}
-
-AssignmentStatus::AssignmentStatus(string statusStr)
-{
-	char statInput = toupper(statusStr[0]);
-	switch (statInput)
-	{
-	case 'C': value = AssignmentStatuses::Completed; break;
-	case 'A': value = AssignmentStatuses::Assigned; break;
-	case 'L': value = AssignmentStatuses::Late; break;
-	}
 }
 
 const AssignmentStatuses AssignmentStatus::Value() const
