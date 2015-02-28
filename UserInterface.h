@@ -277,7 +277,7 @@ void Export(AssignmentQueue assignments, string fileName)
 AssignmentQueue UserInterface::Import()
 {
 	AssignmentQueue assignmentQueue;
-	ifstream inputFile(GetFileNameFromUser(4, 20, ".txt"));
+	ifstream inputFile(GetFileNameFromUser(4, 20, EXT));
 	string tempAssignDate, tempDescription, tempDueDate, tempStatus, tempLine;
 
 	while (inputFile.good())
@@ -308,7 +308,8 @@ AssignmentQueue UserInterface::Import()
 			tempDateAssn.set_format(DateFormat::Standard);
 			tempDateDue.set_format(DateFormat::Standard);
 			
-			AssignmentStatus tempAssignmentStatus(tempStatus);
+			AssignmentStatus tempAssignmentStatus;
+			tempAssignmentStatus.Value(tempStatus);
 
 			Assignment tempAssn(tempDateAssn, tempDateDue, tempAssignmentStatus.Value(), tempDescription);
 

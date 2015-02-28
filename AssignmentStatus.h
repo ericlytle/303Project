@@ -23,6 +23,7 @@ public:
 	const bool HasValue() const;
 	const string ValueToString() const;
 	void Value(AssignmentStatuses status);
+	void Value(string status);
 private:
 	AssignmentStatuses value;
 };
@@ -57,4 +58,12 @@ void AssignmentStatus::Value(AssignmentStatuses status)
 	{
 		value = status;
 	}
+}
+
+void AssignmentStatus::Value(string status)
+{
+	if (status == "Assigned") Value(AssignmentStatuses::Assigned);
+	else if (status == "Late") Value(AssignmentStatuses::Late);
+	else if (status == "Completed") Value(AssignmentStatuses::Completed);
+	else Value(AssignmentStatuses::None);
 }
