@@ -51,6 +51,9 @@ public:
 	AssignmentQueue Import(); // NOT YET DEFINED
 
 private:
+	// Private Data Field
+	string userFileName;
+
 	// Private Data Checks
 	bool isInString(string s1, string s2);
 	bool isNumeric(char c);
@@ -62,7 +65,6 @@ private:
 	char getUserMenuChoice(string validInput);
 	string getLineFromUser();
 	string getUserString(int minLength, int maxLength, string validInput);
-	string userFileName;
 	string getFileName();
 
 	// Private Print Methods
@@ -73,7 +75,7 @@ private:
 
 UserInterface::UserInterface()
 {
-	; // contains no private data fields to initialize
+	userFileName = "";
 }
 
 // Public Displays to User
@@ -262,11 +264,6 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 	}
 }
 
-string UserInterface::getFileName()
-{
-	return userFileName;
-}
-
 // Public Export/Import
 
 void Export(AssignmentQueue assignments, string fileName)
@@ -277,7 +274,7 @@ void Export(AssignmentQueue assignments, string fileName)
 AssignmentQueue UserInterface::Import()
 {
 	AssignmentQueue assignmentQueue;
-	ifstream inputFile(GetFileNameFromUser(4, 20, ".txt"));
+	ifstream inputFile(GetFileNameFromUser(4, 20, EXT));
 	string tempAssignDate, tempDescription, tempDueDate, tempStatus, tempLine;
 
 	while (inputFile.good())
@@ -308,7 +305,8 @@ AssignmentQueue UserInterface::Import()
 			tempDateAssn.set_format(DateFormat::Standard);
 			tempDateDue.set_format(DateFormat::Standard);
 			
-			AssignmentStatus tempAssignmentStatus(tempStatus);
+			AssignmentStatus tempAssignmentStatus;
+			tempAssignmentStatus.Value(tempStatus);
 
 			Assignment tempAssn(tempDateAssn, tempDateDue, tempAssignmentStatus.Value(), tempDescription);
 
@@ -319,6 +317,13 @@ AssignmentQueue UserInterface::Import()
 	
 	inputFile.close();
 	return assignmentQueue;
+}
+
+// Private Data Field
+
+string UserInterface::getFileName()
+{
+	return userFileName;
 }
 
 // Private Data Checks
