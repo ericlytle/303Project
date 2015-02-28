@@ -112,7 +112,7 @@ void main()
 			break; // End Complete Assignment
 
 		case 'D': // Print Assignments to Screen
-			// ui.Print_Assignments(am.GetAllAssignments());
+			ui.Print_Assignments(am.GetAllAssignments());
 			break; // End Print Assignments to Screen
 
 		case 'E': // Display Number of Late Assignments
@@ -120,11 +120,11 @@ void main()
 			break; // End Display Number of Late Assignments
 
 		case 'I': // Import
-			// IMPORT DATA HERE
+			am.AddAssignment(ui.Import());
 			break; // End Import Data
 
 		case 'S': // Save
-			// fileName = ui.GetFileNameFromUser(5, 50, EXT); // get filename
+			
 			// ui.Export(am.Save(), fileName); // perform save/export
 			break; // End Save
 

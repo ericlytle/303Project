@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <algorithm>
+#include <iostream>
 using namespace std;
 
 // AssignmentStatus
@@ -19,6 +21,7 @@ class AssignmentStatus
 {
 public:
 	AssignmentStatus();
+	AssignmentStatus(string statusStr);
 	const AssignmentStatuses Value() const;
 	const bool HasValue() const;
 	const string ValueToString() const;
@@ -30,6 +33,17 @@ private:
 AssignmentStatus::AssignmentStatus()
 {
 	value = AssignmentStatuses::None;
+}
+
+AssignmentStatus::AssignmentStatus(string statusStr)
+{
+	char statInput = toupper(statusStr[0]);
+	switch (statInput)
+	{
+	case 'C': Value(AssignmentStatuses::Completed); break;
+	case 'A': Value(AssignmentStatuses::Assigned); break;
+	case 'L': Value(AssignmentStatuses::Late); break;
+	}
 }
 
 const AssignmentStatuses AssignmentStatus::Value() const
