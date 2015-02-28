@@ -127,7 +127,7 @@ void UserInterface::Message_Failed()
 	cout << "\n\nOperation failed.\n\n";
 }
 
-void Message_NumberOfLateAssignments(int number)
+void UserInterface::Message_NumberOfLateAssignments(int number)
 {
 	cout << "There are " << number << " late assignments." << endl;
 }
