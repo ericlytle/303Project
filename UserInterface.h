@@ -55,7 +55,8 @@ private:
 	// Private Data Field
 	string userFileName;
 
-	// Private Data Checks
+	// Private Data Checks / Conversions
+	AssignmentStatuses convertStringToAssignmentStatuses(string status);
 	bool isInString(string s1, string s2);
 	bool isNumeric(char c);
 	bool stringIsValidAssignmentStatus(string status);
@@ -291,9 +292,10 @@ void UserInterface::Export(AssignmentQueue assignments, string fileName, bool di
 
 AssignmentQueue UserInterface::Import()
 {
+	AssignmentStatuses tempStatus;
 	AssignmentQueue assignmentQueue;
 	ifstream inputFile(GetFileNameFromUser(4, 20, EXT));
-	string tempAssignDate, tempDescription, tempDueDate, tempStatus, tempLine;
+	string tempAssignDate, tempDescription, tempDueDate, tempLine;
 
 	while (inputFile.good())
 	{
@@ -313,7 +315,7 @@ AssignmentQueue UserInterface::Import()
 				case 0: tempAssignDate = tempLine; break;
 				case 1: tempDescription = tempLine; break;
 				case 2: tempDueDate = tempLine; break;
-				case 3: tempStatus = tempLine; break;
+				case 3: tempStatus = convertStringToAssignmentStatuses(tempLine); break;
 				}
 				++counter;
 			}
@@ -322,9 +324,8 @@ AssignmentQueue UserInterface::Import()
 			
 			tempDateAssn.set_format(DateFormat::Standard);
 			tempDateDue.set_format(DateFormat::Standard);
-			
-			AssignmentStatus tempAssignmentStatus(tempStatus);
-			Assignment tempAssn(tempDateAssn, tempDateDue, tempAssignmentStatus.Value(), tempDescription);
+
+			Assignment tempAssn(tempDateAssn, tempDateDue, tempStatus, tempDescription);
 			
 			assignmentQueue.Push(tempAssn);
 
@@ -342,7 +343,19 @@ string UserInterface::getFileName()
 	return userFileName;
 }
 
-// Private Data Checks
+// Private Data Checks / Conversions
+
+AssignmentStatuses UserInterface::convertStringToAssignmentStatuses(string status)
+{
+	if (stringIsValidAssignmentStatus(status))
+	{
+		char statusChar = toupper(status[0]);
+		if (statusChar == 'A') return AssignmentStatuses::Assigned;
+		else if (statusChar == 'L') return AssignmentStatuses::Late;
+		else if (statusChar == 'C') return AssignmentStatuses::Completed;
+	}
+	return AssignmentStatuses::None;
+}
 
 bool UserInterface::isInString(string s1, string s2)
 // Returns True of string s1 is in string s2.

@@ -26,7 +26,6 @@ public:
 	const bool HasValue() const;
 	const string ValueToString() const;
 	void Value(AssignmentStatuses status);
-	void Value(string status);
 private:
 	AssignmentStatuses value;
 };
@@ -72,13 +71,4 @@ void AssignmentStatus::Value(AssignmentStatuses status)
 	{
 		value = status;
 	}
-}
-
-void AssignmentStatus::Value(string status)
-{
-	char statusChar = toupper(status[0]);
-	if (statusChar == 'A') Value(AssignmentStatuses::Assigned);
-	else if (statusChar == 'L') Value(AssignmentStatuses::Late);
-	else if (statusChar == 'C') Value(AssignmentStatuses::Completed);
-	else Value(AssignmentStatuses::None);
 }
