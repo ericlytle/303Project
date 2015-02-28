@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Assignment.h"
 #include <queue>
 
