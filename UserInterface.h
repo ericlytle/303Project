@@ -413,7 +413,7 @@ bool UserInterface::stringIsValidDate(string date)
 	// Try to create an instance of Date obj
 	try
 	{
-		Date date(date);
+		Date date(date, DateFormat::US);
 		return true;
 	}
 	catch (exception)
@@ -440,7 +440,7 @@ Date UserInterface::getDateFromUser()
 		string userString = getUserString(4, 10, "");
 		if (stringIsValidDate(userString))
 		{
-			Date userDate(userString);
+			Date userDate(userString, DateFormat::US);
 			return userDate;
 		}
 		cout << "Invalid Date. Retry. Makes sure date is in (MM/DD/YYYY) format. " << endl << ARROW;
