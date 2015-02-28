@@ -224,7 +224,6 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 
 void AssignmentManager::AddAssignment(AssignmentQueue assignmentQueue)
 {
-	
 	while (!assignmentQueue.IsEmpty())
 	{
 		Assignment temp = assignmentQueue.Pop();

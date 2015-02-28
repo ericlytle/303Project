@@ -107,6 +107,7 @@ char UserInterface::Menu_Main()
 
 void UserInterface::Print_Assignments(AssignmentQueue assignments)
 {
+	
 	while (!assignments.IsEmpty())
 	{
 		print_Assignment(assignments.Pop());
@@ -292,6 +293,7 @@ void UserInterface::Export(AssignmentQueue assignments, string fileName, bool di
 
 AssignmentQueue UserInterface::Import()
 {
+	int assignmentsNotImported = 0;
 	AssignmentStatuses tempStatus;
 	AssignmentQueue assignmentQueue;
 	ifstream inputFile(GetFileNameFromUser(4, 20, EXT));
@@ -319,19 +321,31 @@ AssignmentQueue UserInterface::Import()
 				}
 				++counter;
 			}
-			Date tempDateAssn(tempAssignDate, DateFormat::US);
-			Date tempDateDue(tempDueDate, DateFormat::US);
-			
-			tempDateAssn.set_format(DateFormat::Standard);
-			tempDateDue.set_format(DateFormat::Standard);
-
-			Assignment tempAssn(tempDateAssn, tempDateDue, tempStatus, tempDescription);
-			
-			assignmentQueue.Push(tempAssn);
-
+			try
+			{
+				Date tempDateAssn(tempAssignDate, DateFormat::US);
+				Date tempDateDue(tempDueDate, DateFormat::US);
+				tempDateAssn.set_format(DateFormat::Standard);
+				tempDateDue.set_format(DateFormat::Standard);
+				if (tempDateAssn < tempDateDue)
+				{
+					Assignment tempAssn(tempDateAssn, tempDateDue, tempStatus, tempDescription);
+					assignmentQueue.Push(tempAssn);
+				}
+				else
+					++assignmentsNotImported;
+			}
+			catch (exception)
+			{
+				++assignmentsNotImported;
+			}
 		}
 	}
 	
+	if (assignmentsNotImported > 0)
+		cout << "\n--WARNING: " << assignmentsNotImported << " Assignments Not Imported Because of Incorrect Dates.--" << endl
+		     << "--Please Re-Check Your Input File and Import Again.--\n" << endl;
+
 	inputFile.close();
 	return assignmentQueue;
 }
