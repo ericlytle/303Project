@@ -487,10 +487,9 @@ string UserInterface::getUserString(int minLength, int maxLength, string validIn
 
 void UserInterface::print_Assignment(Assignment assignment)
 {
-	Date tempAssn(assignment.AssignedDate()), tempDue(assignment.DueDate());
 	// print one assignment to the screen
-	cout << "Assigned Date: " << tempAssn.toString() << endl
-		 << "Due Date: " << tempDue.toString() << endl
+	cout << "Assigned Date: " << assignment.AssignedDate().toString() << endl
+		 << "Due Date: " << assignment.DueDate().toString() << endl
 		 << "Description: " << assignment.Description() << endl
 		 << "Status: " << assignment.StatusToString() << endl << endl;
 
