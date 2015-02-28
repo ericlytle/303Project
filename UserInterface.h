@@ -48,7 +48,7 @@ public:
 
 	// Public Export/Import
 	void Export(AssignmentQueue assignments, string fileName); // NOT YET DEFINED
-	void Import(); // NOT YET DEFINED
+	AssignmentQueue Import(); // NOT YET DEFINED
 
 private:
 	// Private Data Checks
@@ -62,6 +62,8 @@ private:
 	char getUserMenuChoice(string validInput);
 	string getLineFromUser();
 	string getUserString(int minLength, int maxLength, string validInput);
+	string userFileName;
+	string getFileName();
 
 	// Private Print Methods
 	void print_Assignment(Assignment assignment); // NOT YET DEFINED
@@ -99,12 +101,14 @@ char UserInterface::Menu_Main()
 	return getUserMenuChoice("ABCDEISQabcdeisq");
 }
 
-//void UserInterface::Print_Assignments(AssignmentQueue assignments)
-//{
-//	; // NOT YET DEFINED
-//	// print heading info, etc for a list of all assignments
-//	// Iterate through the queue, calling printAssignment() for each
-//}
+void UserInterface::Print_Assignments(AssignmentQueue assignments)
+{
+
+	while (!assignments.IsEmpty())
+	{
+		print_Assignment(assignments.Pop());
+	}
+}
 
 void UserInterface::Message_AssignmentAlreadyExists()
 {
@@ -246,6 +250,7 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 			if (fin.good())
 			{
 				fin.close();
+				userFileName = fileName;
 				return fileName;
 			}
 			else
@@ -257,17 +262,64 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 	}
 }
 
+string UserInterface::getFileName()
+{
+	return userFileName;
+}
+
 // Public Export/Import
 
-//void Export(AssignmentQueue assignments, string fileName)
-//{
-//	; // NOT YET DEFINED
-//}
+void Export(AssignmentQueue assignments, string fileName)
+{
+	; // NOT YET DEFINED
+}
 
-//void Import()
-//{
-//	; // NOT YET DEFINED
-//}
+AssignmentQueue UserInterface::Import()
+{
+	AssignmentQueue assignmentQueue;
+	ifstream inputFile(GetFileNameFromUser(4, 20, ".txt"));
+	string tempAssignDate, tempDescription, tempDueDate, tempStatus, tempLine;
+
+	while (inputFile.good())
+	{
+		getline(inputFile, tempLine);
+		if (tempLine != "")
+		{
+			String_Tokenizer token(tempLine, ",");
+			int counter = 0;
+			while (token.has_more_tokens())
+			{
+				tempLine = token.next_token();
+				tempLine.erase(0, tempLine.find_first_not_of(' '));
+				tempLine.erase(tempLine.find_last_not_of(' ') + 1);
+				
+				switch (counter)
+				{
+				case 0: tempAssignDate = tempLine; break;
+				case 1: tempDescription = tempLine; break;
+				case 2: tempDueDate = tempLine; break;
+				case 3: tempStatus = tempLine; break;
+				}
+				++counter;
+			}
+			Date tempDateAssn(tempAssignDate, DateFormat::US);
+			Date tempDateDue(tempDueDate, DateFormat::US);
+			
+			tempDateAssn.set_format(DateFormat::Standard);
+			tempDateDue.set_format(DateFormat::Standard);
+			
+			AssignmentStatus tempAssignmentStatus(tempStatus);
+
+			Assignment tempAssn(tempDateAssn, tempDateDue, tempAssignmentStatus.Value(), tempDescription);
+
+			assignmentQueue.Push(tempAssn);
+
+		}
+	}
+	
+	inputFile.close();
+	return assignmentQueue;
+}
 
 // Private Data Checks
 
@@ -399,8 +451,13 @@ string UserInterface::getUserString(int minLength, int maxLength, string validIn
 
 // Private Print Methods
 
-//void UserInterface::print_Assignment(Assignment assignment)
-//{
-//	; // NOT YET DEFINED
-//	// print one assignment to the screen
-//}
+void UserInterface::print_Assignment(Assignment assignment)
+{
+	Date tempAssn(assignment.AssignedDate()), tempDue(assignment.DueDate());
+	// print one assignment to the screen
+	cout << "Assigned Date: " << tempAssn.toString() << endl
+		 << "Due Date: " << tempDue.toString() << endl
+		 << "Description: " << assignment.Description() << endl
+		 << "Status: " << assignment.StatusToString() << endl << endl;
+
+}

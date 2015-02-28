@@ -1,6 +1,6 @@
-1-31-2014, maiacca cat, 1-31-2015, assigned
-1-30-2014, nervid cat, 1-30-2015, assigned
-1-29-2014, waro cat, 1-29-2015, assigned
+1-31-2014, maiaccacat, 1-31-2015, assigned
+1-30-2014, nervidcat, 1-30-2015, assigned
+1-29-2014, warocat, 1-29-2015, assigned
 1-28-2014, pegasus cat, 1-28-2015, assigned
 1-27-2014, thiro cat, 1-27-2015, assigned
 1-26-2014, auen cat, 1-26-2015, assigned

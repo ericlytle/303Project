@@ -2,6 +2,7 @@
 
 #include "Assignment.h"
 #include "AssignmentQueue.h"
+#include <iostream>
 
 // AssignmentManager
 // This class manages a collection of Assignment objects
@@ -26,6 +27,7 @@ public:
 
 	// Public Setters
 	bool AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
+	void AddAssignment(AssignmentQueue assignmentQueue);
 	bool CompleteAssignment(Date assignedDate); // NOT YET DEFINED
 	bool DeleteAssignment(Date assignedDate); // NOT YET DEFINED
 	bool EditAssignment(Date assignedDate, Date newDueDate);
@@ -152,6 +154,7 @@ AssignmentQueue AssignmentManager::Save()
 
 bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description)
 {
+
 	if (AssignmentExists(assignedDate))
 	{
 		return false;
@@ -193,6 +196,7 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 		}
 		else
 		{
+			//////std::cout << newAssignment.DueDate().toString() << endl; //////
 			if (newAssignment.DueDate() <= _completedAssignments.front().DueDate())
 			{
 				_completedAssignments.push_front(newAssignment);
@@ -217,6 +221,15 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 		++_numberOfLateAssignments;
 	}
 	return _isDirty = true;
+}
+
+void AssignmentManager::AddAssignment(AssignmentQueue assignmentQueue)
+{
+	while (!assignmentQueue.IsEmpty())
+	{
+		Assignment temp = assignmentQueue.Pop();
+		AddAssignment(temp.AssignedDate(), temp.DueDate(), temp.Status(), temp.Description());
+	}
 }
 
 //bool CompleteAssignment(Date assignedDate)
