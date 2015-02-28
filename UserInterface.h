@@ -348,6 +348,11 @@ AssignmentQueue UserInterface::Import()
 				}
 				++counter;
 			}
+			if (tempStatus == AssignmentStatuses::None)
+			{
+				++assignmentsNotImported;
+				continue;
+			}
 			try
 			{
 				Date tempDateAssn(tempAssignDate, DateFormat::US);
