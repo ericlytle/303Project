@@ -443,7 +443,7 @@ Date UserInterface::getDateFromUser()
 			Date userDate(userString);
 			return userDate;
 		}
-		cout << "Invalid Date. Retry. Makes sure date is in (YYYY/MM/DD) format. " << endl << ARROW;
+		cout << "Invalid Date. Retry. Makes sure date is in (MM/DD/YYYY) format. " << endl << ARROW;
 	}
 }
 
