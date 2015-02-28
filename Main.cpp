@@ -123,9 +123,8 @@ void main()
 			am.AddAssignment(ui.Import());
 			break; // End Import Data
 
-		case 'S': // Save
-			
-			// ui.Export(am.Save(), fileName); // perform save/export
+		case 'S': // Save			
+			ui.Export(am.Save(), fileName, am.IsDirty()); // perform save/export
 			break; // End Save
 
 		case 'Q': // Quit

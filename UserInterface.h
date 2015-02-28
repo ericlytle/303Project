@@ -16,6 +16,7 @@
 using namespace std;
 
 const string ARROW = "--> "; // decorative arrow symbol
+const string COMSPACE = ", "; // to seperate output values to file
 const string EXT = ".txt"; // valid file extension
 const unsigned int MAX_LINE = 100; // max length of user input line for getline()
 const unsigned int MAX_STRING = 50; // max length of user input string for cin>>
@@ -47,8 +48,8 @@ public:
 	string GetFileNameFromUser(int minLength = 1, int maxLength = MAX_STRING, string validExtension = "");
 
 	// Public Export/Import
-	void Export(AssignmentQueue assignments, string fileName); // NOT YET DEFINED
-	AssignmentQueue Import(); // NOT YET DEFINED
+	void Export(AssignmentQueue assignments, string fileName, bool dirty); // NOT YET DEFINED
+	AssignmentQueue Import(); 
 
 private:
 	// Private Data Field
@@ -265,9 +266,27 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 
 // Public Export/Import
 
-void Export(AssignmentQueue assignments, string fileName)
+void UserInterface::Export(AssignmentQueue assignments, string fileName, bool dirty)
 {
-	; // NOT YET DEFINED
+	if (dirty)
+	{
+		ofstream fout("output.txt"); //change to fileName for final cut
+
+		while (!assignments.IsEmpty())
+		{
+			Assignment temp = assignments.Pop();
+
+			temp.AssignedDate().set_format(DateFormat::US);
+			temp.DueDate().set_format(DateFormat::US);
+			
+			fout << temp.AssignedDate().toString() + COMSPACE + temp.Description() + COMSPACE +
+				    temp.DueDate().toString() + COMSPACE + temp.StatusToString() << endl;
+		}
+		fout.close();
+		cout << "\n--SAVE COMPLETE--" << endl;
+	}
+	else
+		cout << "\n--NO CHANGES DETECTED--" << endl;	
 }
 
 AssignmentQueue UserInterface::Import()
