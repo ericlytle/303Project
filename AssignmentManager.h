@@ -2,7 +2,6 @@
 
 #include "Assignment.h"
 #include "AssignmentQueue.h"
-#include <queue>
 
 // AssignmentManager
 // This class manages a collection of Assignment objects
