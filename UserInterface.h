@@ -109,7 +109,11 @@ char UserInterface::Menu_Main()
 
 void UserInterface::Print_Assignments(AssignmentQueue assignments)
 {
-	
+	if (assignments.IsEmpty())
+	{
+		cout << "There are no assignments to print.\n\n";
+		return;
+	}
 	while (!assignments.IsEmpty())
 	{
 		print_Assignment(assignments.Pop());
