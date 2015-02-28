@@ -189,7 +189,7 @@ Date UserInterface::GetAssignedDateFromUser(Date dueDate)
 	while (true)
 	{
 		Date assignedDate = getDateFromUser();
-		if (assignedDate <= dueDate)
+		if (assignedDate < dueDate)
 		{
 			return assignedDate;
 		}
@@ -237,7 +237,7 @@ Date UserInterface::GetDueDateFromUser(Date assignedDate)
 	while (true)
 	{
 		Date dueDate = getDateFromUser();
-		if (dueDate >= assignedDate)
+		if (dueDate > assignedDate)
 		{
 			return dueDate;
 		}
