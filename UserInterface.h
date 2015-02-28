@@ -382,17 +382,17 @@ bool UserInterface::stringIsValidAssignmentStatus(string status)
 bool UserInterface::stringIsValidDate(string date)
 // returns True if string "date" represents a valid format
 // for dates passed into the Date.h object, otherwise false
-// CURRENTLY ONLY SUPPORTS STANDARD DATE FORMAT (000/00/00)
+// CURRENTLY ONLY SUPPORTS US DATE FORMAT (00/00/0000)
 {
 	// check length
 	if (date.length() != 10)
 	{
 		return false;
 	}
-	// check for 0000-00-00 string before entering try block
+	// check for 00-00-0000 string before entering try block
 	for (unsigned int i = 0; i < date.length(); i++)
 	{
-		if (i == 4 || i == 7)
+		if (i == 2 || i == 5)
 		{
 			// if is digit, invalid
 			if (isNumeric(date[i]))
