@@ -99,7 +99,7 @@ char UserInterface::Menu_Main()
 	return getUserMenuChoice("ABCDEISQabcdeisq");
 }
 
-//void UserInterface::Print_Assignments(queue<Assignment> assignments)
+//void UserInterface::Print_Assignments(AssignmentQueue assignments)
 //{
 //	; // NOT YET DEFINED
 //	// print heading info, etc for a list of all assignments
@@ -259,7 +259,7 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 
 // Public Export/Import
 
-//void Export(queue<Assignment> assignments, string fileName)
+//void Export(AssignmentQueue assignments, string fileName)
 //{
 //	; // NOT YET DEFINED
 //}

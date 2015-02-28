@@ -126,17 +126,17 @@ int AssignmentManager::TotalNumberOfAssignments()
 
 AssignmentQueue AssignmentManager::GetAllAssignments()
 {
-	queue<Assignment> allAssignments;
+	AssignmentQueue allAssignments;
 	it = _assignments.begin();
 	while (it != _assignments.end())
 	{
-		allAssignments.push(*it);
+		allAssignments.Push(*it);
 		++it;
 	}
 	it = _completedAssignments.begin();
 	while (it != _completedAssignments.end())
 	{
-		allAssignments.push(*it);
+		allAssignments.Push(*it);
 		++it;
 	}
 	return allAssignments;
