@@ -155,18 +155,15 @@ AssignmentStatuses UserInterface::GetStatusFromUser()
 		string userString = getUserString(4, MAX_STRING, "");
 		if (stringIsValidAssignmentStatus(userString))
 		{
-			switch (userString[0])
+			switch (tolower(userString[0]))
 			{
-			case 'A':
 			case 'a': return AssignmentStatuses::Assigned;
-			case 'L':
 			case 'l': return AssignmentStatuses::Late;
-			case 'C':
 			case 'c': return AssignmentStatuses::Completed;
 			default: return AssignmentStatuses::None;
 			}
 		}
-		cout << "\nInvalid Status.\nValid statuses include:\n1. Assigned\n2. Late\n3. Completed\n\n";
+		cout << "\nInvalid Status.\nValid statuses include:\n1. Assigned\n2. Late\n3. Completed\n\n-->";
 	}
 }
 
@@ -206,7 +203,7 @@ Date UserInterface::GetDueDateFromUser(Date assignedDate)
 // Gets a Due Date from user
 // Performs a date range check
 {
-	cout << "Assigned Date: ";
+	cout << "Due Date: ";
 	while (true)
 	{
 		Date dueDate = getDateFromUser();
@@ -272,28 +269,28 @@ void UserInterface::Export(AssignmentQueue assignments, string fileName, bool di
 {
 	if (dirty)
 	{
-		ofstream fout("output.txt"); //change to fileName for final cut
+		ofstream fout("output3.txt"); //change to fileName for final cut
 
 		while (!assignments.IsEmpty())
 		{
 			Assignment temp = assignments.Pop();
 
-			temp.AssignedDate().set_format(DateFormat::US);
-			temp.DueDate().set_format(DateFormat::US);
-			
+			//temp.AssignedDate().set_format(DateFormat::US);
+				
 			fout << temp.AssignedDate().toString() + COMSPACE + temp.Description() + COMSPACE +
 				    temp.DueDate().toString() + COMSPACE + temp.StatusToString() << endl;
 		}
 		fout.close();
-		cout << "\n--SAVE COMPLETE--" << endl;
+		cout << "\n--SAVE COMPLETE--\n" << endl;
 	}
 	else
-		cout << "\n--NO CHANGES DETECTED--" << endl;	
+		cout << "\n--NO CHANGES DETECTED--\n" << endl;	
 }
 
 AssignmentQueue UserInterface::Import()
 {
 	int assignmentsNotImported = 0;
+	int totalAssignmentsAttempted = 0;
 	AssignmentStatuses tempStatus;
 	AssignmentQueue assignmentQueue;
 	ifstream inputFile(GetFileNameFromUser(4, 20, EXT));
@@ -325,8 +322,8 @@ AssignmentQueue UserInterface::Import()
 			{
 				Date tempDateAssn(tempAssignDate, DateFormat::US);
 				Date tempDateDue(tempDueDate, DateFormat::US);
-				tempDateAssn.set_format(DateFormat::Standard);
-				tempDateDue.set_format(DateFormat::Standard);
+				//tempDateAssn.set_format(DateFormat::Standard);
+				//tempDateDue.set_format(DateFormat::Standard);
 				if (tempDateAssn < tempDateDue)
 				{
 					Assignment tempAssn(tempDateAssn, tempDateDue, tempStatus, tempDescription);
@@ -340,10 +337,12 @@ AssignmentQueue UserInterface::Import()
 				++assignmentsNotImported;
 			}
 		}
+		++totalAssignmentsAttempted;
 	}
 	
 	if (assignmentsNotImported > 0)
-		cout << "\n--WARNING: " << assignmentsNotImported << " Assignments Not Imported Because of Incorrect Dates.--" << endl
+		cout << "\n--WARNING: " << assignmentsNotImported << " Assignments out of " 
+		     << totalAssignmentsAttempted << " Not Imported Because of Incorrect Dates.--" << endl
 		     << "--Please Re-Check Your Input File and Import Again.--\n" << endl;
 
 	inputFile.close();
@@ -490,9 +489,9 @@ string UserInterface::getUserString(int minLength, int maxLength, string validIn
 	while (true)
 	{
 		cin >> userString;
-		if (validInput != "" && !isInString(userString, validInput)) cout << "Invalid input. " << endl;
-		else if (static_cast<int>(userString.length()) < minLength) cout << "Too short. Lower limit is " << minLength << " characters. " << endl;
-		else if (static_cast<int>(userString.length()) > maxLength) cout << "Too long. Upper limit is " << maxLength << " characters. " << endl;
+		if (validInput != "" && !isInString(userString, validInput)) cout << "Invalid input. " << endl << ARROW;
+		else if (static_cast<int>(userString.length()) < minLength) cout << "Too short. Lower limit is " << minLength << " characters. " << endl << ARROW;
+		else if (static_cast<int>(userString.length()) > maxLength) cout << "Too long. Upper limit is " << maxLength << " characters. " << endl << ARROW;
 		else return userString;
 	}
 }
