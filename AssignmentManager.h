@@ -259,6 +259,7 @@ bool AssignmentManager::CompleteAssignment(Date assignedDate, Date completedDate
 
 bool AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
 {
+	Assignment temp;
 	if (AssignmentExists(assignedDate))
 	{
 		while (it->AssignedDate() != assignedDate)
@@ -266,6 +267,9 @@ bool AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
 			++it;
 		}
 		it->DueDate(newDueDate);
+		temp = *it;
+		removeFromOpenList(*it);
+		AddAssignment(temp);
 		return _isDirty = true;
 	}
 	return false;
@@ -307,10 +311,11 @@ bool AssignmentManager::removeFromOpenList(Assignment assignment)
 		{
 			if (*it == assignment)
 			{
-				_assignments.erase(it);
+				it = _assignments.erase(it);
 				return _isDirty = true;
 			}
-			++it;
+			else
+				++it;
 		}
 	}
 	return false;
