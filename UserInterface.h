@@ -84,24 +84,24 @@ UserInterface::UserInterface()
 
 char UserInterface::Menu_EditAssignment()
 {
-	cout << "   What would you like to edit? " << endl;
-	cout << "   [A]: Edit Due Date " << endl;
-	cout << "   [B]: Edit Description " << endl;
-	cout << "   [Q]: Quit " << endl << ARROW;
+	cout << "   What would you like to edit? " << endl
+		 << "   [A]: Edit Due Date " << endl
+		 << "   [B]: Edit Description " << endl
+		 << "   [Q]: Quit " << endl << ARROW;
 	return getUserMenuChoice("ABQabq");
 }
 
 char UserInterface::Menu_Main()
 {
-	cout << "Choose from one of the following: " << endl;
-	cout << "[A]: Add Assignment " << endl;
-	cout << "[B]: Edit Assignment " << endl;
-	cout << "[C]: Complete Assignment " << endl;
-	cout << "[D]: Display Assignments " << endl;
-	cout << "[E]: Display Number of Late Assignments " << endl;
-	cout << "[I]: Import Assignments " << endl;
-	cout << "[S]: Save " << endl;
-	cout << "[Q]: Quit  " << endl << ARROW;
+	cout << "Choose from one of the following: " << endl
+		 << "[A]: Add Assignment " << endl
+		 << "[B]: Edit Assignment " << endl
+		 << "[C]: Complete Assignment " << endl
+		 << "[D]: Display Assignments " << endl
+		 << "[E]: Display Number of Late Assignments " << endl
+		 << "[I]: Import Assignments " << endl
+		 << "[S]: Save " << endl
+		 << "[Q]: Quit  " << endl << ARROW;
 	return getUserMenuChoice("ABCDEISQabcdeisq");
 }
 
@@ -486,11 +486,11 @@ string UserInterface::getUserString(int minLength, int maxLength, string validIn
 // Private Print Methods
 
 void UserInterface::print_Assignment(Assignment assignment)
+// prints one assignment to the screen
 {
-	// print one assignment to the screen
-	cout << "Assigned Date: " << assignment.AssignedDate().toString() << endl
+	cout << "ASSIGNMENT NO. " << assignment.ID() << endl
+		 << "Assigned Date: " << assignment.AssignedDate().toString() << endl
 		 << "Due Date: " << assignment.DueDate().toString() << endl
 		 << "Description: " << assignment.Description() << endl
 		 << "Status: " << assignment.StatusToString() << endl << endl;
-
 }

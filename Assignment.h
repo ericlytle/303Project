@@ -186,6 +186,6 @@ bool Assignment::operator==(Assignment other) const
 
 int Assignment::generateID()
 {
-	static int uid = 0;
+	static int uid = 1;
 	return uid++;
 }
