@@ -42,8 +42,6 @@ public:
 	AssignmentStatuses GetStatusFromUser();
 	Date GetAssignedDateFromUser();
 	Date GetAssignedDateFromUser(Date dueDate);
-	Date GetCompletedDateFromUser();
-	Date GetCompletedDateFromUser(Date assignedDate);
 	Date GetDueDateFromUser();
 	Date GetDueDateFromUser(Date assignedDate);
 	string GetDescriptionFromUser();
@@ -109,11 +107,7 @@ char UserInterface::Menu_Main()
 
 void UserInterface::Print_Assignments(AssignmentQueue assignments)
 {
-	if (assignments.IsEmpty())
-	{
-		cout << "There are no assignments to print.\n\n";
-		return;
-	}
+	
 	while (!assignments.IsEmpty())
 	{
 		print_Assignment(assignments.Pop());
@@ -200,30 +194,6 @@ Date UserInterface::GetAssignedDateFromUser(Date dueDate)
 	}
 }
 
-Date UserInterface::GetCompletedDateFromUser()
-// Gets a Completed Date from user
-// no date range check
-{
-	cout << "Completed Date: ";
-	return getDateFromUser();
-}
-
-Date UserInterface::GetCompletedDateFromUser(Date assignedDate)
-// Gets a Completed Date from user
-// Performs a date range check
-{
-	cout << "Completed Date: ";
-	while (true)
-	{
-		Date completedDate = getDateFromUser();
-		if (completedDate >= assignedDate)
-		{
-			return completedDate;
-		}
-		cout << "Completed Date must be after Assigned Date." << endl << ARROW;
-	}
-}
-
 Date UserInterface::GetDueDateFromUser()
 // Gets a Due Date from user
 // does not perform date range check
@@ -236,7 +206,7 @@ Date UserInterface::GetDueDateFromUser(Date assignedDate)
 // Gets a Due Date from user
 // Performs a date range check
 {
-	cout << "Due Date: ";
+	cout << "Assigned Date: ";
 	while (true)
 	{
 		Date dueDate = getDateFromUser();
@@ -323,6 +293,7 @@ void UserInterface::Export(AssignmentQueue assignments, string fileName, bool di
 
 AssignmentQueue UserInterface::Import()
 {
+	int assignmentsNotImported = 0;
 	AssignmentStatuses tempStatus;
 	AssignmentQueue assignmentQueue;
 	ifstream inputFile(GetFileNameFromUser(4, 20, EXT));
@@ -350,19 +321,31 @@ AssignmentQueue UserInterface::Import()
 				}
 				++counter;
 			}
-			Date tempDateAssn(tempAssignDate, DateFormat::US);
-			Date tempDateDue(tempDueDate, DateFormat::US);
-			
-			tempDateAssn.set_format(DateFormat::Standard);
-			tempDateDue.set_format(DateFormat::Standard);
-
-			Assignment tempAssn(tempDateAssn, tempDateDue, tempStatus, tempDescription);
-			
-			assignmentQueue.Push(tempAssn);
-
+			try
+			{
+				Date tempDateAssn(tempAssignDate, DateFormat::US);
+				Date tempDateDue(tempDueDate, DateFormat::US);
+				tempDateAssn.set_format(DateFormat::Standard);
+				tempDateDue.set_format(DateFormat::Standard);
+				if (tempDateAssn < tempDateDue)
+				{
+					Assignment tempAssn(tempDateAssn, tempDateDue, tempStatus, tempDescription);
+					assignmentQueue.Push(tempAssn);
+				}
+				else
+					++assignmentsNotImported;
+			}
+			catch (exception)
+			{
+				++assignmentsNotImported;
+			}
 		}
 	}
 	
+	if (assignmentsNotImported > 0)
+		cout << "\n--WARNING: " << assignmentsNotImported << " Assignments Not Imported Because of Incorrect Dates.--" << endl
+		     << "--Please Re-Check Your Input File and Import Again.--\n" << endl;
+
 	inputFile.close();
 	return assignmentQueue;
 }
