@@ -105,7 +105,6 @@ char UserInterface::Menu_Main()
 
 void UserInterface::Print_Assignments(AssignmentQueue assignments)
 {
-
 	while (!assignments.IsEmpty())
 	{
 		print_Assignment(assignments.Pop());
@@ -305,11 +304,9 @@ AssignmentQueue UserInterface::Import()
 			tempDateAssn.set_format(DateFormat::Standard);
 			tempDateDue.set_format(DateFormat::Standard);
 			
-			AssignmentStatus tempAssignmentStatus;
-			tempAssignmentStatus.Value(tempStatus);
-
+			AssignmentStatus tempAssignmentStatus(tempStatus);
 			Assignment tempAssn(tempDateAssn, tempDateDue, tempAssignmentStatus.Value(), tempDescription);
-
+			
 			assignmentQueue.Push(tempAssn);
 
 		}

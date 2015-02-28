@@ -116,7 +116,7 @@ void main()
 			break; // End Print Assignments to Screen
 
 		case 'E': // Display Number of Late Assignments
-			// ui.Message_NumberOfLateAssignments(am.NumberOfLateAssignments());
+			//ui.Message_NumberOfLateAssignments(am.NumberOfLateAssignments());
 			break; // End Display Number of Late Assignments
 
 		case 'I': // Import

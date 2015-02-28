@@ -196,7 +196,6 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 		}
 		else
 		{
-			//////std::cout << newAssignment.DueDate().toString() << endl; //////
 			if (newAssignment.DueDate() <= _completedAssignments.front().DueDate())
 			{
 				_completedAssignments.push_front(newAssignment);
@@ -225,6 +224,7 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 
 void AssignmentManager::AddAssignment(AssignmentQueue assignmentQueue)
 {
+	
 	while (!assignmentQueue.IsEmpty())
 	{
 		Assignment temp = assignmentQueue.Pop();

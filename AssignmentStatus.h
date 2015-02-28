@@ -41,9 +41,9 @@ AssignmentStatus::AssignmentStatus(string statusStr)
 	char statInput = toupper(statusStr[0]);
 	switch (statInput)
 	{
-	case 'C': Value(AssignmentStatuses::Completed); break;
-	case 'A': Value(AssignmentStatuses::Assigned); break;
-	case 'L': Value(AssignmentStatuses::Late); break;
+	case 'C': value = AssignmentStatuses::Completed; break;
+	case 'A': value = AssignmentStatuses::Assigned; break;
+	case 'L': value = AssignmentStatuses::Late; break;
 	}
 }
 
@@ -76,8 +76,9 @@ void AssignmentStatus::Value(AssignmentStatuses status)
 
 void AssignmentStatus::Value(string status)
 {
-	if (status == "Assigned") Value(AssignmentStatuses::Assigned);
-	else if (status == "Late") Value(AssignmentStatuses::Late);
-	else if (status == "Completed") Value(AssignmentStatuses::Completed);
+	char statusChar = toupper(status[0]);
+	if (statusChar == 'A') Value(AssignmentStatuses::Assigned);
+	else if (statusChar == 'L') Value(AssignmentStatuses::Late);
+	else if (statusChar == 'C') Value(AssignmentStatuses::Completed);
 	else Value(AssignmentStatuses::None);
 }
