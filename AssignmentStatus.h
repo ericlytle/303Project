@@ -5,7 +5,7 @@ using namespace std;
 
 // AssignmentStatus
 // This class models an Assignment Status
-// Provides a useful interface with the AssignmentStatuses enum
+// Provides a useful interface for the AssignmentStatuses enum
 
 enum AssignmentStatuses
 {
