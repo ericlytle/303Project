@@ -61,6 +61,7 @@ private:
 	AssignmentStatuses convertStringToAssignmentStatuses(string status);
 	bool isInString(string s1, string s2);
 	bool isNumeric(char c);
+	bool isValidDateRange(Date firstDate, Date secondDate);
 	bool stringIsValidAssignmentStatus(string status);
 	bool stringIsValidDate(string d);
 
@@ -72,7 +73,7 @@ private:
 	string getFileName();
 
 	// Private Print Methods
-	void print_Assignment(Assignment assignment); // NOT YET DEFINED
+	void print_Assignment(Assignment assignment);
 };
 
 // Default Constructor
@@ -189,7 +190,7 @@ Date UserInterface::GetAssignedDateFromUser(Date dueDate)
 	while (true)
 	{
 		Date assignedDate = getDateFromUser();
-		if (assignedDate < dueDate)
+		if (isValidDateRange(assignedDate, dueDate))
 		{
 			return assignedDate;
 		}
@@ -213,7 +214,7 @@ Date UserInterface::GetCompletedDateFromUser(Date assignedDate)
 	while (true)
 	{
 		Date completedDate = getDateFromUser();
-		if (completedDate >= assignedDate)
+		if (isValidDateRange(assignedDate, completedDate))
 		{
 			return completedDate;
 		}
@@ -237,7 +238,7 @@ Date UserInterface::GetDueDateFromUser(Date assignedDate)
 	while (true)
 	{
 		Date dueDate = getDateFromUser();
-		if (dueDate > assignedDate)
+		if (isValidDateRange(assignedDate, dueDate))
 		{
 			return dueDate;
 		}
@@ -416,6 +417,13 @@ bool UserInterface::isNumeric(char c)
 // True if char c is numeric, otherwise false
 {
 	return c >= 48 && c <= 57;
+}
+
+bool UserInterface::isValidDateRange(Date firstDate, Date secondDate)
+// True if firstDate is less than or equal to the secondDate,
+// otherwise False
+{
+	return firstDate <= secondDate;
 }
 
 bool UserInterface::stringIsValidAssignmentStatus(string status)
