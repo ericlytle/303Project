@@ -7,6 +7,7 @@
 
 // Assignment
 // This class models an individual homework assignment
+// Authors: Eric Lytle, Luke McDuff, Brad Van Wick
 
 class Assignment 
 {

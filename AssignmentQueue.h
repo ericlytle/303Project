@@ -7,6 +7,7 @@
 // Assignment Queue
 // This class encapsulates a queue of Assignment objects
 // Used to pass groups of Assignment objects between the AssignmentManager and UserInterace classes
+// Authors: Eric Lytle, Luke McDuff, Brad Van Wick
 
 class AssignmentQueue
 {

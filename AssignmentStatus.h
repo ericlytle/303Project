@@ -8,6 +8,7 @@ using namespace std;
 // AssignmentStatus
 // This class models an Assignment Status
 // Provides a useful interface for the AssignmentStatuses enum
+// Authors: Eric Lytle, Luke McDuff, Brad Van Wick
 
 enum AssignmentStatuses
 {

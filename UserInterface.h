@@ -13,6 +13,9 @@
 #include <sstream>
 #include <string>
 
+// User Interface
+// Authors: Eric Lytle, Luke McDuff, Brad Van Wick
+
 using namespace std;
 
 const string ARROW = "--> "; // decorative arrow symbol

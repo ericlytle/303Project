@@ -1,6 +1,8 @@
 #include "UserInterface.h"
 #include "AssignmentManager.h"
 
+// Authors: Eric Lytle, Luke McDuff, Brad Van Wick
+
 using namespace std;
 
 void Add(AssignmentManager& am, UserInterface& ui);

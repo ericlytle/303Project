@@ -6,6 +6,7 @@
 
 // AssignmentManager
 // This class manages a collection of Assignment objects
+// Authors: Eric Lytle, Luke McDuff, Brad Van Wick
 
 class AssignmentManager
 {
