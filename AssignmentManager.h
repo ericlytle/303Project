@@ -263,10 +263,10 @@ bool AssignmentManager::CompleteAssignment(Date assignedDate, Date completedDate
 
 bool AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
 {
-	Assignment temp;
-	it = _assignments.begin();
 	if (AssignmentExists(assignedDate))
 	{
+		Assignment temp;
+		it = _assignments.begin();
 		while (it->AssignedDate() != assignedDate)
 		{
 			++it;
@@ -284,6 +284,7 @@ bool AssignmentManager::EditAssignment(Date assignedDate, string newDescription)
 {
 	if (AssignmentExists(assignedDate))
 	{
+		it = _assignments.begin();
 		while (it->AssignedDate() != assignedDate)
 		{
 			++it;
