@@ -428,8 +428,7 @@ bool UserInterface::isNumeric(char c) const
 }
 
 bool UserInterface::isValidDateRange(Date firstDate, Date secondDate) const
-// True if firstDate is less than or equal to the secondDate,
-// otherwise False
+// True if firstDate is less the secondDate, otherwise False
 {
 	return firstDate < secondDate;
 }
@@ -446,7 +445,7 @@ bool UserInterface::stringIsValidAssignmentStatus(string status) const
 bool UserInterface::stringIsValidDate(string date) const
 // returns True if string "date" represents a valid format
 // for dates passed into the Date.h object, otherwise false
-// CURRENTLY ONLY SUPPORTS US DATE FORMAT (00/00/0000)
+// ONLY SUPPORTS US DATE FORMAT (00/00/0000)
 {
 	// check length
 	if (date.length() != 10)
@@ -522,10 +521,7 @@ string UserInterface::getLineFromUser()
 		{
 			return desc;
 		}
-		else
-		{
-			cout << "Too long. Upper limit is " << MAX_LINE << " characters." << endl;
-		}
+		cout << "Too long. Upper limit is " << MAX_LINE << " characters." << endl;
 	}
 }
 
