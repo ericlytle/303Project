@@ -19,7 +19,7 @@ public:
 	AssignmentStatuses Status();
 	bool IsLate();
 	const int ID() const;
-	Date AssignedDate();
+	const Date AssignedDate() const;
 	Date CompletedDate();
 	Date DueDate();
 	int RevisionNumber();
@@ -87,7 +87,7 @@ const int Assignment::ID() const
 	return _id;
 }
 
-Date Assignment::AssignedDate()
+const Date Assignment::AssignedDate() const
 {
 	return _assignedDate;
 }

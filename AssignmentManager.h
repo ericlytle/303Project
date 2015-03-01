@@ -40,6 +40,7 @@ private:
 	list<Assignment> _assignments;
 	list<Assignment> _completedAssignments;
 	list<Assignment>::iterator it;
+	list<Assignment>::const_iterator const_It;
 
 	// Private Functions
 	bool addToClosedList(Assignment assignment);
@@ -60,11 +61,11 @@ Assignment AssignmentManager::GetAssignment(Date assignedDate)
 {
 	if (AssignmentExists(assignedDate))
 	{
-		for (it = _assignments.begin(); it != _assignments.end(); ++it)
+		for (const_It = _assignments.begin(); const_It != _assignments.end(); ++const_It)
 		{
-			if (it->AssignedDate() == assignedDate)
+			if (const_It->AssignedDate() == assignedDate)
 			{
-				return *it;
+				return *const_It;
 			}
 		}
 	}
@@ -132,6 +133,7 @@ int AssignmentManager::TotalNumberOfAssignments()
 
 AssignmentQueue AssignmentManager::GetAllAssignments()
 {
+	
 	AssignmentQueue allAssignments;
 	it = _assignments.begin();
 	while (it != _assignments.end())
