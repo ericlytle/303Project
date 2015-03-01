@@ -162,13 +162,7 @@ AssignmentStatuses UserInterface::GetStatusFromUser()
 		string userString = getUserString(4, MAX_STRING, "");
 		if (stringIsValidAssignmentStatus(userString))
 		{
-			switch (tolower(userString[0]))
-			{
-			case 'a': return AssignmentStatuses::Assigned;
-			case 'l': return AssignmentStatuses::Late;
-			case 'c': return AssignmentStatuses::Completed;
-			default: return AssignmentStatuses::None;
-			}
+			return convertStringToAssignmentStatuses(userString);
 		}
 		cout << "\nInvalid Status.\nValid statuses include:\n1. Assigned\n2. Late\n3. Completed\n\n-->";
 	}
