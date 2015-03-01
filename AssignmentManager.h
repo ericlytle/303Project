@@ -321,7 +321,9 @@ bool AssignmentManager::removeFromOpenList(Assignment assignment)
 				return _isDirty = true;
 			}
 			else
+			{
 				++it;
+			}
 		}
 	}
 	return false;
