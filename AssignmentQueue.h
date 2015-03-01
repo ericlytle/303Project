@@ -5,7 +5,7 @@
 
 
 // Assignment Queue
-// Small class that encapsulates a queue of Assignment objects
+// This class encapsulates a queue of Assignment objects
 // Used to pass groups of Assignment objects between the AssignmentManager and UserInterace classes
 
 class AssignmentQueue
