@@ -20,10 +20,10 @@ public:
 	bool AssignmentExists(Date assignedDate);
 	bool AssignmentExists(Assignment assignment);
 	const bool IsDirty() const;
-	int NumberOfClosedAssignments();
-	int NumberOfLateAssignments();
-	int NumberOfOpenAssignments();
-	int TotalNumberOfAssignments();
+	const int NumberOfClosedAssignments();
+	const int NumberOfLateAssignments();
+	const int NumberOfOpenAssignments();
+	const int TotalNumberOfAssignments();
 
 	// Public Setters
 	bool AddAssignment(Assignment assignment);
@@ -40,6 +40,7 @@ private:
 	list<Assignment> _assignments;
 	list<Assignment> _completedAssignments;
 	list<Assignment>::iterator it;
+	list<Assignment>::const_iterator constIt;
 
 	// Private Functions
 	bool addToClosedList(Assignment assignment);
@@ -60,11 +61,11 @@ Assignment AssignmentManager::GetAssignment(Date assignedDate)
 {
 	if (AssignmentExists(assignedDate))
 	{
-		for (it = _assignments.begin(); it != _assignments.end(); ++it)
+		for (constIt = _assignments.begin(); constIt != _assignments.end(); ++constIt)
 		{
-			if (it->AssignedDate() == assignedDate)
+			if (constIt->AssignedDate() == assignedDate)
 			{
-				return *it;
+				return *constIt;
 			}
 		}
 	}
@@ -74,17 +75,17 @@ Assignment AssignmentManager::GetAssignment(Date assignedDate)
 AssignmentQueue AssignmentManager::GetAllAssignments()
 {
 	AssignmentQueue allAssignments;
-	it = _assignments.begin();
-	while (it != _assignments.end())
+	constIt = _assignments.begin();
+	while (constIt != _assignments.end())
 	{
-		allAssignments.Push(*it);
-		++it;
+		allAssignments.Push(*constIt);
+		++constIt;
 	}
-	it = _completedAssignments.begin();
-	while (it != _completedAssignments.end())
+	constIt = _completedAssignments.begin();
+	while (constIt != _completedAssignments.end())
 	{
-		allAssignments.Push(*it);
-		++it;
+		allAssignments.Push(*constIt);
+		++constIt;
 	}
 	return allAssignments;
 }
@@ -99,14 +100,14 @@ bool AssignmentManager::AssignmentExists(Assignment assignment)
 {
 	if (!_assignments.empty())
 	{
-		it = _assignments.begin();
-		while (it != _assignments.end())
+		constIt = _assignments.begin();
+		while (constIt != _assignments.end())
 		{
-			if (*it == assignment)
+			if (*constIt == assignment)
 			{
 				return true;
 			}
-			++it;
+			++constIt;
 		}
 	}
 	return false;
@@ -116,14 +117,14 @@ bool AssignmentManager::AssignmentExists(Date assignedDate)
 {
 	if (!_assignments.empty())
 	{
-		it = _assignments.begin();
-		while (it != _assignments.end())
+		constIt = _assignments.begin();
+		while (constIt != _assignments.end())
 		{
-			if (it->AssignedDate() == assignedDate)
+			if (constIt->AssignedDate() == assignedDate)
 			{
 				return true;
 			}
-			++it;
+			++constIt;
 		}
 	}
 	return false;
@@ -134,22 +135,22 @@ const bool AssignmentManager::IsDirty() const
 	return _isDirty;
 }
 
-int AssignmentManager::NumberOfClosedAssignments()
+const int AssignmentManager::NumberOfClosedAssignments()
 {
 	return _completedAssignments.size();
 }
 
-int AssignmentManager::NumberOfLateAssignments()
+const int AssignmentManager::NumberOfLateAssignments()
 {
 	return _numberOfLateAssignments;
 }
 
-int AssignmentManager::NumberOfOpenAssignments()
+const int AssignmentManager::NumberOfOpenAssignments()
 {
 	return _assignments.size();
 }
 
-int AssignmentManager::TotalNumberOfAssignments()
+const int AssignmentManager::TotalNumberOfAssignments()
 {
 	return _assignments.size() + _completedAssignments.size();
 }
@@ -187,12 +188,12 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 			}
 			else
 			{
-				it = _assignments.begin();
-				while (newAssignment.DueDate() >= it->DueDate())
+				constIt = _assignments.begin();
+				while (newAssignment.DueDate() >= constIt->DueDate())
 				{
-					++it;
+					++constIt;
 				}
-				_assignments.insert(it, newAssignment);
+				_assignments.insert(constIt, newAssignment);
 			}
 		}
 	}
@@ -215,12 +216,12 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 			}
 			else
 			{
-				it = _completedAssignments.begin();
-				while (newAssignment.DueDate() >= it->DueDate())
+				constIt = _completedAssignments.begin();
+				while (newAssignment.DueDate() >= constIt->DueDate())
 				{
-					++it;
+					++constIt;
 				}
-				_completedAssignments.insert(it, newAssignment);
+				_completedAssignments.insert(constIt, newAssignment);
 			}
 		}
 	}
@@ -263,6 +264,7 @@ bool AssignmentManager::CompleteAssignment(Date assignedDate, Date completedDate
 bool AssignmentManager::EditAssignment(Date assignedDate, Date newDueDate)
 {
 	Assignment temp;
+	it = _assignments.begin();
 	if (AssignmentExists(assignedDate))
 	{
 		while (it->AssignedDate() != assignedDate)

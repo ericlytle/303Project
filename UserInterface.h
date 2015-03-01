@@ -30,11 +30,11 @@ public:
 	// Public Displays to User
 	char Menu_EditAssignment();
 	char Menu_Main();
-	void Print_Assignments(AssignmentQueue assignments); // NOT YET DEFINED
+	void Print_Assignments(AssignmentQueue assignments) const; 
 	void Message_AssignmentAlreadyExists();
 	void Message_AssignmentDoesNotExist();
 	void Message_Failed();
-	void Message_NumberOfLateAssignments(int number);
+	void Message_NumberOfLateAssignments(int number) const;
 	void Message_Success();
 	void Message_WhichAssignment();
 
@@ -59,11 +59,11 @@ private:
 
 	// Private Data Checks / Conversions
 	AssignmentStatuses convertStringToAssignmentStatuses(string status);
-	bool isInString(string s1, string s2);
-	bool isNumeric(char c);
-	bool isValidDateRange(Date firstDate, Date secondDate);
-	bool stringIsValidAssignmentStatus(string status);
-	bool stringIsValidDate(string d);
+	bool isInString(string s1, string s2) const;
+	bool isNumeric(char c) const;
+	bool isValidDateRange(Date firstDate, Date secondDate) const;
+	bool stringIsValidAssignmentStatus(string status) const;
+	bool stringIsValidDate(string d) const;
 
 	// Private User Input
 	Date getDateFromUser();
@@ -73,7 +73,7 @@ private:
 	string getFileName();
 
 	// Private Print Methods
-	void print_Assignment(Assignment assignment);
+	void print_Assignment(Assignment assignment) const;
 };
 
 // Default Constructor
@@ -108,16 +108,28 @@ char UserInterface::Menu_Main()
 	return getUserMenuChoice("ABCDEISQabcdeisq");
 }
 
-void UserInterface::Print_Assignments(AssignmentQueue assignments)
+void UserInterface::Print_Assignments(AssignmentQueue assignments) const
 {
 	if (assignments.IsEmpty())
 	{
 		cout << "There are no assignments to print.\n\n";
 		return;
 	}
+	int countA = 0, countCL = 0;
 	while (!assignments.IsEmpty())
 	{
-		print_Assignment(assignments.Pop());
+		Assignment temp = assignments.Pop();
+		if (temp.StatusToString() == "Assigned" && countA == 0)
+		{
+			cout << "\n--ASSIGNED-HOMEWORK--\n";
+			++countA;
+		}
+		if ((temp.StatusToString() == "Completed" || temp.StatusToString() == "Late") && countCL == 0)
+		{
+			cout << "\n--COMPLETED/LATE-HOMEWORK--\n";
+			++countCL;
+		}
+		print_Assignment(temp);
 	}
 }
 
@@ -136,9 +148,9 @@ void UserInterface::Message_Failed()
 	cout << "\n\nOperation failed.\n\n";
 }
 
-void UserInterface::Message_NumberOfLateAssignments(int number)
+void UserInterface::Message_NumberOfLateAssignments(int number) const
 {
-	cout << "There are " << number << " late assignments." << endl;
+	cout << "\n\nThere are " << number << " late assignments.\n\n";
 }
 
 void UserInterface::Message_Success()
@@ -374,7 +386,7 @@ AssignmentQueue UserInterface::Import()
 	if (assignmentsNotImported > 0)
 	{
 		cout << "\n--WARNING: " << assignmentsNotImported << " Assignments out of "
-			<< totalAssignmentsAttempted << " Not Imported Because of Incorrect Dates.--" << endl
+			<< totalAssignmentsAttempted << " Not Imported Because of Incorrect Dates/Status.--" << endl
 			<< "--Please Re-Check Your Input File and Import Again.--\n" << endl;
 	}
 	inputFile.close();
@@ -402,27 +414,27 @@ AssignmentStatuses UserInterface::convertStringToAssignmentStatuses(string statu
 	return AssignmentStatuses::None;
 }
 
-bool UserInterface::isInString(string s1, string s2)
+bool UserInterface::isInString(string s1, string s2) const
 // Returns True of string s1 is in string s2.
 // Otherwise, returns False.
 {
 	return s2.find(s1) != string::npos;
 }
 
-bool UserInterface::isNumeric(char c)
+bool UserInterface::isNumeric(char c) const
 // True if char c is numeric, otherwise false
 {
 	return c >= 48 && c <= 57;
 }
 
-bool UserInterface::isValidDateRange(Date firstDate, Date secondDate)
+bool UserInterface::isValidDateRange(Date firstDate, Date secondDate) const
 // True if firstDate is less than or equal to the secondDate,
 // otherwise False
 {
-	return firstDate <= secondDate;
+	return firstDate < secondDate;
 }
 
-bool UserInterface::stringIsValidAssignmentStatus(string status)
+bool UserInterface::stringIsValidAssignmentStatus(string status) const
 // returns True if string status matches one of the three
 // valid assignment status types, otherwise returns false
 {
@@ -431,7 +443,7 @@ bool UserInterface::stringIsValidAssignmentStatus(string status)
 		|| (isInString(status, "completedCompletedCOMPLETED") && status.length() == 9);
 }
 
-bool UserInterface::stringIsValidDate(string date)
+bool UserInterface::stringIsValidDate(string date) const
 // returns True if string "date" represents a valid format
 // for dates passed into the Date.h object, otherwise false
 // CURRENTLY ONLY SUPPORTS US DATE FORMAT (00/00/0000)
@@ -460,7 +472,6 @@ bool UserInterface::stringIsValidDate(string date)
 				return false;
 			}
 		}
-
 	}
 	// Try to create an instance of Date obj
 	try
@@ -537,11 +548,11 @@ string UserInterface::getUserString(int minLength, int maxLength, string validIn
 
 // Private Print Methods
 
-void UserInterface::print_Assignment(Assignment assignment)
+void UserInterface::print_Assignment(Assignment assignment) const
 // prints one assignment to the screen
 {
-	cout << "ASSIGNMENT NO. " << assignment.ID() << endl
-		<< "Assigned Date: " << assignment.AssignedDate().toString() << endl
+	
+   cout << "Assigned Date: " << assignment.AssignedDate().toString() << endl
 		<< "Due Date: " << assignment.DueDate().toString() << endl
 		<< "Description: " << assignment.Description() << endl
 		<< "Status: " << assignment.StatusToString() << endl << endl;

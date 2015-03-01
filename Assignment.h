@@ -16,15 +16,15 @@ public:
 	Assignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description);
 
 	// Public Getters
-	AssignmentStatuses Status();
-	bool IsLate();
+	const AssignmentStatuses Status() const;
+	const bool IsLate()const;
 	const int ID() const;
-	const Date AssignedDate() const;
-	Date CompletedDate();
-	Date DueDate();
-	int RevisionNumber();
-	string Description();
-	string StatusToString();
+	const Date AssignedDate()const;
+	const Date CompletedDate()const;
+	const Date DueDate()const;
+	const int RevisionNumber()const;
+	const string Description()const;
+	const string StatusToString()const;
 
 	// Public Setters
 	void AssignedDate(Date assignedDate);
@@ -72,12 +72,12 @@ Assignment::Assignment(Date assignedDate, Date dueDate, AssignmentStatuses statu
 
 // Public Getters
 
-AssignmentStatuses Assignment::Status()
+const AssignmentStatuses Assignment::Status() const
 {
 	return _status.Value();
 }
 
-bool Assignment::IsLate()
+const bool Assignment::IsLate() const
 {
 	return _status.Value() == AssignmentStatuses::Late;
 }
@@ -92,27 +92,27 @@ const Date Assignment::AssignedDate() const
 	return _assignedDate;
 }
 
-Date Assignment::CompletedDate()
+const Date Assignment::CompletedDate() const
 {
 	return _completedDate;
 }
 
-Date Assignment::DueDate()
+const Date Assignment::DueDate() const
 {
 	return _dueDate;
 }
 
-int Assignment::RevisionNumber()
+const int Assignment::RevisionNumber() const
 {
 	return _revisionNumber;
 }
 
-string Assignment::Description()
+const string Assignment::Description() const
 {
 	return _description;
 }
 
-string Assignment::StatusToString()
+const string Assignment::StatusToString() const
 {
 	return _status.ValueToString();
 }
