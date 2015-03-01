@@ -309,7 +309,9 @@ void UserInterface::Export(AssignmentQueue assignments, string fileName, bool di
 		cout << "\n--SAVE COMPLETE--\n" << endl;
 	}
 	else
-		cout << "\n--NO CHANGES DETECTED--\n" << endl;	
+	{
+		cout << "\n--NO CHANGES DETECTED--\n" << endl;
+	}
 }
 
 AssignmentQueue UserInterface::Import()
@@ -369,12 +371,12 @@ AssignmentQueue UserInterface::Import()
 			}
 		}
 	}
-	
 	if (assignmentsNotImported > 0)
-		cout << "\n--WARNING: " << assignmentsNotImported << " Assignments out of " 
-		     << totalAssignmentsAttempted << " Not Imported Because of Incorrect Dates.--" << endl
-		     << "--Please Re-Check Your Input File and Import Again.--\n" << endl;
-
+	{
+		cout << "\n--WARNING: " << assignmentsNotImported << " Assignments out of "
+			<< totalAssignmentsAttempted << " Not Imported Because of Incorrect Dates.--" << endl
+			<< "--Please Re-Check Your Input File and Import Again.--\n" << endl;
+	}
 	inputFile.close();
 	return assignmentQueue;
 }
