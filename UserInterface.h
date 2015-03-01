@@ -325,6 +325,7 @@ AssignmentQueue UserInterface::Import()
 
 	while (inputFile.good())
 	{
+		++totalAssignmentsAttempted;
 		getline(inputFile, tempLine);
 		if (tempLine != "")
 		{
@@ -369,7 +370,6 @@ AssignmentQueue UserInterface::Import()
 				++assignmentsNotImported;
 			}
 		}
-		++totalAssignmentsAttempted;
 	}
 	if (assignmentsNotImported > 0)
 	{
