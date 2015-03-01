@@ -1,141 +1,135 @@
 #include "UserInterface.h"
 #include "AssignmentManager.h"
+
 using namespace std;
+
+void Add(AssignmentManager& am, UserInterface& ui);
+void Complete(AssignmentManager& am, UserInterface& ui);
+void Edit(AssignmentManager& am, UserInterface& ui);
 
 void main()
 {
 	// Initialize objects and variables
-	UserInterface ui;
 	AssignmentManager am;
-
+	UserInterface ui;
 	bool quit = false;
-
-	Date assignedDate;
-	Date dueDate;
-	Date completedDate;
-	Date newDueDate;
-	Date newAssignedDate;
-
-	AssignmentStatuses status;
-
-	string description;
-	string fileName;
-	string newDescription;
-
 	char choice;
+	string fileName;
 
-	// program outer loop
+	// Program Outer Loop
 	while (!quit)
 	{
-		// Show main menu, get choice
+		// Show Main Menu, Get Choice
 		choice = ui.Menu_Main();
 
-		// Evaluate choice
+		// Evaluate choice and Perform Action
 		switch (choice)
 		{
-		case 'A': //Add Assignment
-			while (true)
+		case 'A': Add(am, ui); break; // Add Assignment
+		case 'B': Edit(am, ui); break; // Edit Assignment
+		case 'C': Complete(am, ui); break; // Complete Assignment
+		case 'D': ui.Print_Assignments(am.GetAllAssignments()); break; // Print Assignments to Screen
+		case 'E': ui.Message_NumberOfLateAssignments(am.NumberOfLateAssignments()); break; // Display Number of Late Assignments		
+		case 'I': am.AddAssignments(ui.Import()); break; // Import
+		case 'S': ui.Export(am.Save(), fileName, am.IsDirty()); break; // Save
+		case 'Q': quit = true; break; // Quit
+		default: break;
+		}
+	}
+}
+
+void Add(AssignmentManager& am, UserInterface& ui)
+{
+	AssignmentStatuses status;
+	Date assignedDate;
+	Date dueDate;
+	string description;
+
+	while (true)
+	{
+		dueDate = ui.GetDueDateFromUser(); // due date (no date range check)
+		while (true)
+		{
+			assignedDate = ui.GetAssignedDateFromUser(dueDate); // assigned date (with date range check)
+			if (!am.AssignmentExists(assignedDate)) // check for existence
 			{
-				dueDate = ui.GetDueDateFromUser(); // due date (no date range check)
-				while (true)
-				{
-					assignedDate = ui.GetAssignedDateFromUser(dueDate); // assigned date (with date range check)
-					if (!am.AssignmentExists(assignedDate)) // check for existence
-					{
-						break;
-					}
-					ui.Message_AssignmentAlreadyExists(); // assignment already exists
-				}
-				status = ui.GetStatusFromUser(); // status
-				description = ui.GetDescriptionFromUser(); // description
-				if (!am.AddAssignment(assignedDate, dueDate, status, description)) // attempt an add
-				{
-					ui.Message_AssignmentAlreadyExists(); // assignment already exists, did not add
-				}
-				ui.Message_Success(); // add was successful
 				break;
 			}
-			break; // End Add Assignment
+			ui.Message_AssignmentAlreadyExists(); // assignment already exists
+		}
+		status = ui.GetStatusFromUser(); // status
+		description = ui.GetDescriptionFromUser(); // description
+		if (!am.AddAssignment(assignedDate, dueDate, status, description)) // attempt an add
+		{
+			ui.Message_AssignmentAlreadyExists(); // assignment already exists, did not add
+		}
+		ui.Message_Success(); // add was successful
+		break;
+	}
+}
 
-		case 'B': // Edit Assignment
-			// Choose which assignment to edit
-			ui.Message_WhichAssignment();
-			while (true)
-			{
-				assignedDate = ui.GetAssignedDateFromUser(); // which assignment?
-				if (am.AssignmentExists(assignedDate)) // check for existence
-				{
-					break;
-				}
-				ui.Message_AssignmentDoesNotExist();
-			}
-			// Show Edit Assignment Menu, get choice
-			choice = ui.Menu_EditAssignment();
-			switch (choice)
-			{
-			case 'A': // Edit Due Date
-				newDueDate = ui.GetDueDateFromUser(assignedDate); // new due date (with date range check)
-				if (!am.EditAssignment(assignedDate, newDueDate)) // attempt an edit
-				{
-					ui.Message_Failed(); // edit failed
-				}
-				ui.Message_Success(); // edit was successful
-				break;
-			case 'B': // Edit Description
-				newDescription = ui.GetDescriptionFromUser(); // new description
-				if (!am.EditAssignment(assignedDate, newDescription)) // attempt an edit
-				{
-					ui.Message_AssignmentDoesNotExist();
-				}
-				ui.Message_Success();
-				break;
-			case 'Q': // Quit Edit Menu
-			default:
-				break;
-			}
-			break; // End Edit Assignment
+void Complete(AssignmentManager& am, UserInterface& ui)
+{
+	Date assignedDate;
+	Date completedDate;
 
-		case 'C': // Complete Assignment
-			while (true)
-			{
-				assignedDate = ui.GetAssignedDateFromUser(); // which assignment?
-				if (am.AssignmentExists(assignedDate)) // check for existence
-				{
-					break;
-				}
-				ui.Message_AssignmentDoesNotExist();
-			}
-			completedDate = ui.GetCompletedDateFromUser(assignedDate); // get completed date (with range check)
-			if (!am.CompleteAssignment(assignedDate, completedDate)) // attempt to complete
-			{
-				ui.Message_Failed();
-				break;
-			}
-			ui.Message_Success();
-			break; // End Complete Assignment
-
-		case 'D': // Print Assignments to Screen
-			ui.Print_Assignments(am.GetAllAssignments());
-			break; // End Print Assignments to Screen
-
-		case 'E': // Display Number of Late Assignments		
-			ui.Message_NumberOfLateAssignments(am.NumberOfLateAssignments());
-			break; // End Display Number of Late Assignments
-
-		case 'I': // Import
-			am.AddAssignments(ui.Import());
-			break; // End Import Data
-
-		case 'S': // Save			
-			ui.Export(am.Save(), fileName, am.IsDirty()); // perform save/export
-			break; // End Save
-
-		case 'Q': // Quit
-			quit = true;
-			break;
-
-		default:
+	while (true)
+	{
+		assignedDate = ui.GetAssignedDateFromUser(); // which assignment?
+		if (am.AssignmentExists(assignedDate)) // check for existence
+		{
 			break;
 		}
+		ui.Message_AssignmentDoesNotExist();
+	}
+	completedDate = ui.GetCompletedDateFromUser(assignedDate); // get completed date (with range check)
+	if (!am.CompleteAssignment(assignedDate, completedDate)) // attempt to complete
+	{
+		ui.Message_Failed();
+	}
+	ui.Message_Success();
+}
+
+void Edit(AssignmentManager& am, UserInterface& ui)
+{
+	Date assignedDate;
+	Date newDueDate;
+	string newDescription;
+
+	ui.Message_WhichAssignment();
+
+	while (true)
+	{
+		// Choose which assignment to edit
+		assignedDate = ui.GetAssignedDateFromUser(); // which assignment?
+		if (am.AssignmentExists(assignedDate)) // check for existence
+		{
+			break;
+		}
+		ui.Message_AssignmentDoesNotExist();
+	}
+	// Show Edit Assignment Menu, get choice
+	char choice = ui.Menu_EditAssignment();
+	switch (choice)
+	{
+	case 'A': // Edit Due Date
+		newDueDate = ui.GetDueDateFromUser(assignedDate); // new due date (with date range check)
+		if (!am.EditAssignment(assignedDate, newDueDate)) // attempt an edit
+		{
+			ui.Message_Failed(); // edit failed
+		}
+		ui.Message_Success(); // edit was successful
+		break;
+	case 'B': // Edit Description
+		newDescription = ui.GetDescriptionFromUser(); // new description
+		if (!am.EditAssignment(assignedDate, newDescription)) // attempt an edit
+		{
+			ui.Message_AssignmentDoesNotExist();
+		}
+		ui.Message_Success();
+		break;
+	case 'Q': // Quit Edit Menu
+	default:
+		break;
 	}
 }
