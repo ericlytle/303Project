@@ -52,7 +52,7 @@ public:
 	string GetDescriptionFromUser();
 	string GetFileNameFromUser(int minLength = 1, int maxLength = MAX_STRING, string validExtension = "");
 
-	// Public Export/Import
+	// Public File Export / Import
 	void Export(AssignmentQueue assignments, string fileName, bool dirty);
 	AssignmentQueue Import();
 
@@ -303,7 +303,7 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 	}
 }
 
-// Public Export/Import
+// Public File Export / Import
 
 void UserInterface::Export(AssignmentQueue assignments, string fileName, bool dirty)
 {

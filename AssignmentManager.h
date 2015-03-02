@@ -18,8 +18,8 @@ public:
 	Assignment GetAssignment(Date assignedDate);
 	AssignmentQueue GetAllAssignments();
 	AssignmentQueue Save();
-	bool AssignmentExists(Date assignedDate);
 	bool AssignmentExists(Assignment assignment);
+	bool AssignmentExists(Date assignedDate);
 	const bool IsDirty() const;
 	const int NumberOfClosedAssignments();
 	const int NumberOfLateAssignments();
@@ -40,12 +40,14 @@ private:
 	int _numberOfLateAssignments;
 	list<Assignment> _assignments;
 	list<Assignment> _completedAssignments;
-	list<Assignment>::iterator it;
-	list<Assignment>::const_iterator constIt;
 
 	// Private Functions
 	bool addToClosedList(Assignment assignment);
 	bool removeFromOpenList(Assignment assignment);
+
+	// Private Iterators
+	list<Assignment>::const_iterator constIt;
+	list<Assignment>::iterator it;
 };
  
 // Constructor
