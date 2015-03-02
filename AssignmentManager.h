@@ -62,6 +62,7 @@ AssignmentManager::AssignmentManager()
 
 Assignment AssignmentManager::GetAssignment(Date assignedDate)
 {
+	//gets individual assignment from assigned list
 	if (AssignmentExists(assignedDate))
 	{
 		for (constIt = _assignments.begin(); constIt != _assignments.end(); ++constIt)
@@ -77,6 +78,7 @@ Assignment AssignmentManager::GetAssignment(Date assignedDate)
 
 AssignmentQueue AssignmentManager::GetAllAssignments()
 {
+	//gets all statuses of assignments and returns a queue
 	AssignmentQueue allAssignments;
 	constIt = _assignments.begin();
 	while (constIt != _assignments.end())
@@ -167,6 +169,9 @@ bool AssignmentManager::AddAssignment(Assignment assignment)
 
 bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, AssignmentStatuses status, string description)
 {
+	//checks front and back of list if item to add is less or greater and pushes, otherwise
+	//iterates through lists and finds place where assignment is greater than or equal and inserts
+	//returns true if assignment not found and was succesfully added
 
 	if (AssignmentExists(assignedDate))
 	{
@@ -237,6 +242,7 @@ bool AssignmentManager::AddAssignment(Date assignedDate, Date dueDate, Assignmen
 
 void AssignmentManager::AddAssignments(AssignmentQueue assignmentQueue)
 {
+	//takes queue of assignments and adds assignments 
 	while (!assignmentQueue.IsEmpty())
 	{
 		Assignment temp = assignmentQueue.Pop();
@@ -246,6 +252,9 @@ void AssignmentManager::AddAssignments(AssignmentQueue assignmentQueue)
 
 bool AssignmentManager::CompleteAssignment(Date assignedDate, Date completedDate)
 {
+	//changes status of assignment to late or complete depending on completed date entered
+	//if equal to assigned date or less than or equal to due date marked as completed else late
+	//returns true if assignment status is succesfully changed
 	Assignment assignmentToRemove = GetAssignment(assignedDate);
 	Assignment assignmentToAdd = GetAssignment(assignedDate);
 	assignmentToAdd.CompletedDate(completedDate);
@@ -302,6 +311,7 @@ bool AssignmentManager::EditAssignment(Date assignedDate, string newDescription)
 
 bool AssignmentManager::addToClosedList(Assignment assignment)
 {
+	//adds assignment to a list after status was changed
 	if (assignment.Status() == AssignmentStatuses::Late
 		|| assignment.Status() == AssignmentStatuses::Completed)
 	{
@@ -313,6 +323,7 @@ bool AssignmentManager::addToClosedList(Assignment assignment)
 
 bool AssignmentManager::removeFromOpenList(Assignment assignment)
 {
+	//removes from assignment list after status changed
 	if (!_assignments.empty())
 	{
 		it = _assignments.begin();

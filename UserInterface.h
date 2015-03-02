@@ -315,8 +315,6 @@ void UserInterface::Export(AssignmentQueue assignments, string fileName, bool di
 		while (!assignments.IsEmpty())
 		{
 			Assignment temp = assignments.Pop();
-
-			//temp.AssignedDate().set_format(DateFormat::US);
 				
 			fout << temp.AssignedDate().toString() + COMSPACE + temp.Description() + COMSPACE +
 				    temp.DueDate().toString() + COMSPACE + temp.StatusToString() << endl;
@@ -332,6 +330,8 @@ void UserInterface::Export(AssignmentQueue assignments, string fileName, bool di
 
 AssignmentQueue UserInterface::Import()
 {
+	//gets file name from user, imports assignments and returns a queue of assignments
+	//checks dates and status as well as file name given by user
 	int assignmentsNotImported = 0;
 	int totalAssignmentsAttempted = 0;
 	AssignmentStatuses tempStatus;
@@ -371,8 +371,7 @@ AssignmentQueue UserInterface::Import()
 			{
 				Date tempDateAssn(tempAssignDate, DateFormat::US);
 				Date tempDateDue(tempDueDate, DateFormat::US);
-				//tempDateAssn.set_format(DateFormat::Standard);
-				//tempDateDue.set_format(DateFormat::Standard);
+				
 				if (tempDateAssn < tempDateDue)
 				{
 					Assignment tempAssn(tempDateAssn, tempDateDue, tempStatus, tempDescription);
