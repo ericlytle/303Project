@@ -325,8 +325,8 @@ void UserInterface::Export(AssignmentQueue assignments, string fileName, bool di
 		{
 			Assignment temp = assignments.Pop();
 				
-			fout << temp.AssignedDate().toString() + COMSPACE + temp.Description() + COMSPACE +
-				    temp.DueDate().toString() + COMSPACE + temp.StatusToString() << endl;
+			fout << temp.DueDate().toString() + COMSPACE + temp.Description() + COMSPACE +
+				    temp.AssignedDate().toString() + COMSPACE + temp.StatusToString() << endl;
 		}
 		fout.close();
 		cout << "\n--SAVE COMPLETE--\n" << endl;
@@ -364,9 +364,9 @@ AssignmentQueue UserInterface::Import(string fileName)
 				
 				switch (counter)
 				{
-				case 0: tempAssignDate = tempLine; break;
+				case 0: tempDueDate = tempLine; break;
 				case 1: tempDescription = tempLine; break;
-				case 2: tempDueDate = tempLine; break;
+				case 2: tempAssignDate = tempLine; break;
 				case 3: tempStatus = convertStringToAssignmentStatuses(tempLine); break;
 				}
 				++counter;
@@ -398,9 +398,12 @@ AssignmentQueue UserInterface::Import(string fileName)
 	if (assignmentsNotImported > 0)
 	{
 		cout << "\n--WARNING: " << assignmentsNotImported << " Assignments out of "
-			<< totalAssignmentsAttempted << " Not Imported Because of Incorrect Dates/Status.--" << endl
-			<< "--Please Re-Check Your Input File and Import Again.--\n" << endl;
+			<< totalAssignmentsAttempted << " Not Imported \n--Because of Incorrect Dates/Status--" << endl
+			<< "--Please Re-Check Your Input File and Import Again--\n" << endl;
 	}
+	else
+		cout << "\n--IMPORT-100%-COMPLETE--\n\n";
+
 	inputFile.close();
 	return assignmentQueue;
 }
