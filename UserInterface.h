@@ -65,6 +65,7 @@ private:
 	bool isInString(string s1, string s2) const;
 	bool isNumeric(char c) const;
 	bool isValidDateRange(Date firstDate, Date secondDate) const;
+	bool isValidDateRange(Date firstDate, Date secondDate, int completedCheck) const;
 	bool stringIsValidAssignmentStatus(string status) const;
 	bool stringIsValidDate(string d) const;
 
@@ -223,7 +224,7 @@ Date UserInterface::GetCompletedDateFromUser(Date assignedDate)
 	while (true)
 	{
 		Date completedDate = getDateFromUser();
-		if (isValidDateRange(assignedDate, completedDate))
+		if (isValidDateRange(assignedDate, completedDate, 0))
 		{
 			return completedDate;
 		}
@@ -434,6 +435,12 @@ bool UserInterface::isValidDateRange(Date firstDate, Date secondDate) const
 // True if firstDate is less the secondDate, otherwise False
 {
 	return firstDate < secondDate;
+}
+
+bool UserInterface::isValidDateRange(Date firstDate, Date secondDate, int completedCheck) const
+// True if firstDate is less the secondDate, otherwise False
+{
+	return firstDate <= secondDate;
 }
 
 bool UserInterface::stringIsValidAssignmentStatus(string status) const
