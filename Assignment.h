@@ -19,10 +19,10 @@ public:
 	// Public Getters
 	const AssignmentStatuses Status() const;
 	const bool IsLate() const;
-	const int ID() const;
 	const Date AssignedDate() const;
 	const Date CompletedDate() const;
 	const Date DueDate() const;
+	const int ID() const;
 	const int RevisionNumber() const;
 	const string Description() const;
 	const string StatusToString() const;
