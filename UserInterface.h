@@ -53,7 +53,7 @@ public:
 	string GetFileNameFromUser(int minLength = 1, int maxLength = MAX_STRING, string validExtension = "", bool isOutputFile = false);
 
 	// Public File Export / Import
-	void Export(AssignmentQueue assignments, string fileName, bool dirty);
+	void Export(AssignmentQueue assignments, string fileName, bool dirty, bool autoSave = false);
 	AssignmentQueue Import(string fileName);
 
 private:
@@ -311,7 +311,7 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 
 // Public File Export / Import
 
-void UserInterface::Export(AssignmentQueue assignments, string fileName, bool dirty)
+void UserInterface::Export(AssignmentQueue assignments, string fileName, bool dirty, bool autoSave)
 {
 	if (dirty)
 	{
@@ -329,11 +329,11 @@ void UserInterface::Export(AssignmentQueue assignments, string fileName, bool di
 				    temp.DueDate().toString() + COMSPACE + temp.StatusToString() << endl;
 		}
 		fout.close();
-		cout << "\n--SAVE COMPLETE--\n" << endl;
+		if (!autoSave) { cout << "\n--SAVE COMPLETE--\n" << endl; }
 	}
 	else
 	{
-		cout << "\n--NO CHANGES DETECTED--\n" << endl;
+		if (!autoSave) { cout << "\n--NO CHANGES DETECTED--\n" << endl; }
 	}
 }
 

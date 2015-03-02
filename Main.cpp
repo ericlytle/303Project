@@ -32,8 +32,11 @@ void main()
 		case 'C': Complete(am, ui); break; // Complete Assignment
 		case 'D': ui.Print_Assignments(am.GetAllAssignments()); break; // Print Assignments to Screen
 		case 'E': ui.Message_NumberOfLateAssignments(am.NumberOfLateAssignments()); break; // Display Number of Late Assignments		
-		case 'I': fileName = ui.GetFileNameFromUser(4, 20, EXT); 
-					am.AddAssignments(ui.Import(fileName)); break; // Import
+		case 'I': // Import
+			fileName = ui.GetFileNameFromUser(4, 20, EXT); // set fileName
+					am.AddAssignments(ui.Import(fileName)); // import from file
+					ui.Export(am.Save(), fileName, am.IsDirty(), true); // perfor autoSav
+					break;
 		case 'S': ui.Export(am.Save(), fileName, am.IsDirty()); break; // Save
 		case 'Q': quit = true; break; // Quit
 		default: break;
