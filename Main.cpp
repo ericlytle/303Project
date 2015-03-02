@@ -35,7 +35,7 @@ void main()
 		case 'I': // Import
 			fileName = ui.GetFileNameFromUser(4, 20, EXT); // set fileName
 					am.AddAssignments(ui.Import(fileName)); // import from file
-					ui.Export(am.Save(), fileName, am.IsDirty(), true); // perfor autoSav
+					ui.Export(am.Save(), fileName, am.IsDirty(), true); // perform auto save
 					break;
 		case 'S': ui.Export(am.Save(), fileName, am.IsDirty()); break; // Save
 		case 'Q': quit = true; break; // Quit
