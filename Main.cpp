@@ -16,7 +16,6 @@ void main()
 	UserInterface ui;
 	bool quit = false;
 	char choice;
-	string fileName;
 
 	// Program Outer Loop
 	while (!quit)
@@ -33,7 +32,7 @@ void main()
 		case 'D': ui.Print_Assignments(am.GetAllAssignments()); break; // Print Assignments to Screen
 		case 'E': ui.Message_NumberOfLateAssignments(am.NumberOfLateAssignments()); break; // Display Number of Late Assignments		
 		case 'I': am.AddAssignments(ui.Import()); break; // Import
-		case 'S': ui.Export(am.Save(), fileName, am.IsDirty()); break; // Save
+		case 'S': ui.Export(am.Save(), am.IsDirty()); break; // Save
 		case 'Q': quit = true; break; // Quit
 		default: break;
 		}

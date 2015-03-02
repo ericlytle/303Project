@@ -50,10 +50,10 @@ public:
 	Date GetDueDateFromUser();
 	Date GetDueDateFromUser(Date assignedDate);
 	string GetDescriptionFromUser();
-	string GetFileNameFromUser(int minLength = 1, int maxLength = MAX_STRING, string validExtension = "");
+	string GetFileNameFromUser(int minLength = 1, int maxLength = MAX_STRING, string validExtension = "", bool isOutputFile = false);
 
 	// Public File Export / Import
-	void Export(AssignmentQueue assignments, string fileName, bool dirty);
+	void Export(AssignmentQueue assignments, bool dirty);
 	AssignmentQueue Import();
 
 private:
@@ -64,8 +64,7 @@ private:
 	AssignmentStatuses convertStringToAssignmentStatuses(string status);
 	bool isInString(string s1, string s2) const;
 	bool isNumeric(char c) const;
-	bool isValidDateRange(Date firstDate, Date secondDate) const;
-	bool isValidDateRange(Date firstDate, Date secondDate, int completedCheck) const;
+	bool isValidDateRange(Date firstDate, Date secondDate, bool lessThanOnly = false) const;
 	bool stringIsValidAssignmentStatus(string status) const;
 	bool stringIsValidDate(string d) const;
 
@@ -224,7 +223,7 @@ Date UserInterface::GetCompletedDateFromUser(Date assignedDate)
 	while (true)
 	{
 		Date completedDate = getDateFromUser();
-		if (isValidDateRange(assignedDate, completedDate, 0))
+		if (isValidDateRange(assignedDate, completedDate, true))
 		{
 			return completedDate;
 		}
@@ -263,10 +262,12 @@ string UserInterface::GetDescriptionFromUser()
 	return getLineFromUser();
 }
 
-string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string validExtension)
+string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string validExtension, bool isOutputFile)
 // Gets a filename from user.
 // Checks for length within bounds, alpha-numeric characters,
 // dashes, underscores, and valid file extension.
+// isOutputFile defaults to false, so tries to open file.
+// if isOutputFile is set to true, does not try to open the file.
 {
 	while (true)
 	{
@@ -285,7 +286,7 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 			index++;
 		}
 		if (fileExtension != validExtension) cout << "Invalid file. " << endl;
-		else if (fileExtension == validExtension)
+		else if (fileExtension == validExtension && !isOutputFile)
 		{
 			ifstream fin;
 			fin.open(fileName);
@@ -301,16 +302,21 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 				fin.close();
 			}
 		}
+		else if (fileExtension == validExtension && isOutputFile)
+		{
+			return fileName;
+		}
 	}
 }
 
 // Public File Export / Import
 
-void UserInterface::Export(AssignmentQueue assignments, string fileName, bool dirty)
+void UserInterface::Export(AssignmentQueue assignments, bool dirty)
 {
 	if (dirty)
 	{
-		ofstream fout("output3.txt"); //change to fileName for final cut
+		string fileName = GetFileNameFromUser(4, 20, EXT, true);
+		ofstream fout(fileName);
 
 		while (!assignments.IsEmpty())
 		{
@@ -430,16 +436,12 @@ bool UserInterface::isNumeric(char c) const
 	return c >= 48 && c <= 57;
 }
 
-bool UserInterface::isValidDateRange(Date firstDate, Date secondDate) const
+bool UserInterface::isValidDateRange(Date firstDate, Date secondDate, bool lessThanOnly) const
 // True if firstDate is less the secondDate, otherwise False
+// lessThanOnly defaults to False, so performs a < check,
+// if lessThanOnly bool is True, then performs <= check
 {
-	return firstDate < secondDate;
-}
-
-bool UserInterface::isValidDateRange(Date firstDate, Date secondDate, int completedCheck) const
-// True if firstDate is less the secondDate, otherwise False
-{
-	return firstDate <= secondDate;
+	return lessThanOnly ? firstDate < secondDate : firstDate <= secondDate;
 }
 
 bool UserInterface::stringIsValidAssignmentStatus(string status) const
