@@ -53,8 +53,8 @@ public:
 	string GetFileNameFromUser(int minLength = 1, int maxLength = MAX_STRING, string validExtension = "", bool isOutputFile = false);
 
 	// Public File Export / Import
-	void Export(AssignmentQueue assignments, bool dirty);
-	AssignmentQueue Import();
+	void Export(AssignmentQueue assignments, string fileName, bool dirty);
+	AssignmentQueue Import(string fileName);
 
 private:
 	// Private Data Field
@@ -311,11 +311,14 @@ string UserInterface::GetFileNameFromUser(int minLength, int maxLength, string v
 
 // Public File Export / Import
 
-void UserInterface::Export(AssignmentQueue assignments, bool dirty)
+void UserInterface::Export(AssignmentQueue assignments, string fileName, bool dirty)
 {
 	if (dirty)
 	{
-		string fileName = GetFileNameFromUser(4, 20, EXT, true);
+		if (fileName == "")
+		{
+			string fileName = GetFileNameFromUser(4, 20, EXT, true);
+		}
 		ofstream fout(fileName);
 
 		while (!assignments.IsEmpty())
@@ -334,7 +337,7 @@ void UserInterface::Export(AssignmentQueue assignments, bool dirty)
 	}
 }
 
-AssignmentQueue UserInterface::Import()
+AssignmentQueue UserInterface::Import(string fileName)
 {
 	//gets file name from user, imports assignments and returns a queue of assignments
 	//checks dates and status as well as file name given by user
@@ -342,7 +345,7 @@ AssignmentQueue UserInterface::Import()
 	int totalAssignmentsAttempted = 0;
 	AssignmentStatuses tempStatus;
 	AssignmentQueue assignmentQueue;
-	ifstream inputFile(GetFileNameFromUser(4, 20, EXT));
+	ifstream inputFile(fileName);
 	string tempAssignDate, tempDescription, tempDueDate, tempLine;
 
 	while (inputFile.good())
