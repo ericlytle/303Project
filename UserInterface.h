@@ -199,7 +199,7 @@ Date UserInterface::GetAssignedDateFromUser(Date dueDate)
 	while (true)
 	{
 		Date assignedDate = getDateFromUser();
-		if (isValidDateRange(assignedDate, dueDate))
+		if (isValidDateRange(assignedDate, dueDate,true))
 		{
 			return assignedDate;
 		}
@@ -223,7 +223,7 @@ Date UserInterface::GetCompletedDateFromUser(Date assignedDate)
 	while (true)
 	{
 		Date completedDate = getDateFromUser();
-		if (isValidDateRange(assignedDate, completedDate, true))
+		if (isValidDateRange(assignedDate, completedDate))
 		{
 			return completedDate;
 		}
@@ -247,7 +247,7 @@ Date UserInterface::GetDueDateFromUser(Date assignedDate)
 	while (true)
 	{
 		Date dueDate = getDateFromUser();
-		if (isValidDateRange(assignedDate, dueDate))
+		if (isValidDateRange(assignedDate, dueDate, true))
 		{
 			return dueDate;
 		}
@@ -381,7 +381,7 @@ AssignmentQueue UserInterface::Import(string fileName)
 				Date tempDateAssn(tempAssignDate, DateFormat::US);
 				Date tempDateDue(tempDueDate, DateFormat::US);
 				
-				if (tempDateAssn < tempDateDue)
+				if (tempDateAssn < tempDateDue) 
 				{
 					Assignment tempAssn(tempDateAssn, tempDateDue, tempStatus, tempDescription);
 					assignmentQueue.Push(tempAssn);
